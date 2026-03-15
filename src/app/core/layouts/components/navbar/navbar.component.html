@@ -1,0 +1,329 @@
+<div class="hidden lg:block text-sm border-b border-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-10">
+      <div class="flex items-center gap-6 text-gray-500">
+        <span class="flex items-center gap-2">
+          <i class="fa-solid fa-truck text-green-600 text-xs"></i>
+          <span>Free Shipping on Orders 500 EGP</span>
+        </span>
+
+        <span class="flex items-center gap-2">
+          <i class="fa-solid fa-gift text-green-600 text-xs"></i>
+          <span>New Arrivals Daily</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-4 text-gray-500">
+          <a
+            href="tel:+18001234567"
+            class="flex items-center gap-1.5 hover:text-green-600 transition-colors"
+          >
+            <i class="fa-solid fa-phone text-xs"></i>
+            <span>+1 (800) 123-4567</span>
+          </a>
+
+          <a
+            href="mailto:support@freshcart.com"
+            class="flex items-center gap-1.5 hover:text-green-600 transition-colors"
+          >
+            <i class="fa-regular fa-envelope text-xs"></i>
+            <span>support@freshcart.com</span>
+          </a>
+        </div>
+
+        <span class="w-px h-4 bg-gray-200"></span>
+
+        <div class="flex items-center gap-4">
+          <a
+            class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
+            routerLink="/login"
+          >
+            <i class="fa-regular fa-user text-xs"></i>
+            <span>Sign In</span>
+          </a>
+
+          <a
+            class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
+            routerLink="/register"
+          >
+            <i class="fa-solid fa-user-plus text-xs"></i>
+            <span>Sign Up</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="sticky top-0 z-40 bg-white shadow-sm">
+  <div class="bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16 lg:h-[72px] gap-4 lg:gap-8">
+        <a class="shrink-0" routerLink="/">
+          <img
+            alt="FreshCart Logo"
+            class="h-8 w-28 sm:w-auto"
+            src="https://freshcart-route.vercel.app/_next/static/media/freshcart-logo.49f1b44d.svg"
+          />
+        </a>
+
+        <form class="hidden lg:flex flex-1 max-w-2xl">
+          <div class="relative w-full">
+            <input
+              type="text"
+              placeholder="Search for products, brands and more..."
+              class="w-full px-5 py-3 pr-12 rounded-full border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all text-sm"
+            />
+            <button
+              type="button"
+              class="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-primary-700 transition-colors"
+            >
+              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </button>
+          </div>
+        </form>
+
+        <nav class="hidden xl:flex items-center gap-6">
+          <a class="text-gray-700 hover:text-green-600 font-medium transition-colors" routerLink="/"
+            >Home</a
+          >
+          <a
+            class="text-gray-700 hover:text-green-600 font-medium transition-colors"
+            routerLink="/products"
+            >Shop</a
+          >
+
+          <div class="relative group">
+            <button
+              class="flex items-center gap-1.5 text-gray-700 hover:text-green-600 font-medium transition-colors py-2"
+            >
+              Categories
+              <i
+                class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"
+              ></i>
+            </button>
+
+            <div
+              class="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+            >
+              <div class="bg-white border border-gray-100 rounded-xl shadow-xl py-2 min-w-[200px]">
+                <a
+                  class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
+                  routerLink="/categories"
+                  >All Categories</a
+                >
+                <a
+                  class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
+                  routerLink="/"
+                  >Electronics</a
+                >
+                <a
+                  class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
+                  routerLink="/"
+                  >Women's Fashion</a
+                >
+                <a
+                  class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
+                  routerLink="/"
+                  >Men's Fashion</a
+                >
+                <a
+                  class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
+                  routerLink="/"
+                  >Beauty & Health</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <a
+            class="text-gray-700 hover:text-green-600 font-medium transition-colors"
+            routerLink="/brands"
+            >Brands</a
+          >
+        </nav>
+
+        <div class="flex items-center gap-1 lg:gap-2">
+          <a
+            class="hidden lg:flex items-center gap-2 pr-3 mr-2 border-r border-gray-200 hover:opacity-80 transition-opacity"
+            routerLink="/contact"
+          >
+            <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+              <i class="fa-solid fa-headset text-green-600"></i>
+            </div>
+            <div class="text-xs">
+              <div class="text-gray-400">Support</div>
+              <div class="font-semibold text-gray-700">24/7 Help</div>
+            </div>
+          </a>
+
+          <a
+            class="relative p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+            title="Wishlist"
+            routerLink="/wishlist"
+          >
+            <i
+              class="fa-regular fa-heart text-xl text-gray-500 group-hover:text-green-600 transition-colors"
+            ></i>
+          </a>
+
+          <a
+            class="relative p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+            title="Cart"
+            routerLink="/cart"
+          >
+            <i
+              class="fa-solid fa-cart-shopping text-xl text-gray-500 group-hover:text-green-600 transition-colors"
+            ></i>
+            <span
+              class="absolute top-0.5 right-0.5 size-[18px] rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white"
+            >
+              1
+            </span>
+          </a>
+
+          <a
+            class="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-primary-600/20"
+            routerLink="/login"
+          >
+            <i class="fa-regular fa-user text-xs"></i>
+            Sign In
+          </a>
+
+          <button
+            #toggler
+            (click)="toggleSideBar()"
+            class="lg:hidden ml-1 w-10 h-10 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center transition-colors"
+          >
+            <i [class]="showSideBar() ? 'fa-xmark' : 'fa-bars'" class="fa-solid"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div
+  class="fixed inset-0 bg-black/50 z-50 lg:hidden transition-opacity duration-300 opacity-0 pointer-events-none"
+></div>
+<div
+  #sidebar
+  [class]="showSideBar() ? 'translate-x-0' : 'translate-x-full'"
+  class="fixed top-0 right-0 h-full z-100 w-70 max-w-[85vw] bg-white shadow-2xl transition-transform duration-300 overflow-y-auto lg:hidden"
+>
+  <div class="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
+    <img
+      alt="FreshCart"
+      loading="lazy"
+      width="160"
+      height="31"
+      decoding="async"
+      data-nimg="1"
+      class="h-8 w-auto"
+      style="color: transparent"
+      src="https://freshcart-route.vercel.app/_next/static/media/freshcart-logo.49f1b44d.svg"
+    /><button
+      (click)="closeSideBar()"
+      class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <form class="p-4 border-b border-gray-100">
+    <div class="relative">
+      <input
+        type="text"
+        placeholder="Search products..."
+        class="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm"
+        value=""
+      /><button
+        type="button"
+        class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center"
+      >
+        <i class="fa-solid fa-magnifying-glass text-white"></i>
+      </button>
+    </div>
+  </form>
+  <nav class="p-4">
+    <div class="space-y-1">
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
+        routerLink="/"
+        >Home</a
+      ><a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
+        routerLink="/products"
+        >Shop</a
+      ><a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
+        routerLink="/categories"
+        >Categories</a
+      ><a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
+        routerLink="/brands"
+        >Brands</a
+      >
+    </div>
+  </nav>
+  <div class="mx-4 border-t border-gray-100"></div>
+  <div class="p-4 space-y-1">
+    <a
+      class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+      routerLink="/wishlist"
+      ><div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center">
+          <i class="fa-solid fa-heart text-red-500"></i>
+        </div>
+        <span class="font-medium text-gray-700">Wishlist</span>
+      </div></a
+    ><a
+      class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-green-50 transition-colors"
+      routerLink="/cart"
+      ><div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center">
+          <i class="fa-solid fa-cart-shopping text-green-500"></i>
+        </div>
+        <span class="font-medium text-gray-700">Cart</span>
+      </div>
+      <span class="bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">1</span></a
+    >
+  </div>
+  <div class="mx-4 border-t border-gray-100"></div>
+  <div class="p-4 space-y-1">
+    <div class="grid grid-cols-2 gap-3 pt-2">
+      <a
+        class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-green-600 text-green-600 font-semibold hover:bg-green-600 hover:text-white hover:border-transparent transition-colors"
+        routerLink="/login"
+        >Sign In</a
+      ><a
+        class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-green-600 text-green-600 font-semibold hover:bg-green-600 hover:text-white hover:border-transparent transition-colors"
+        routerLink="/register"
+        >Sign Up</a
+      >
+    </div>
+  </div>
+  <a
+    class="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-primary-50 transition-colors"
+    routerLink="/contact"
+    ><div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+      <svg
+        data-prefix="fas"
+        data-icon="headset"
+        class="svg-inline--fa fa-headset text-green-600"
+        role="img"
+        viewBox="0 0 448 512"
+        aria-hidden="true"
+      >
+        <path
+          fill="currentColor"
+          d="M224 64c-79 0-144.7 57.3-157.7 132.7 9.3-3 19.3-4.7 29.7-4.7l16 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0c-53 0-96-43-96-96l0-64C0 100.3 100.3 0 224 0S448 100.3 448 224l0 168.1c0 66.3-53.8 120-120.1 120l-87.9-.1-32 0c-26.5 0-48-21.5-48-48s21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 0 40 0c39.8 0 72-32.2 72-72l0-20.9c-14.1 8.2-30.5 12.8-48 12.8l-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48l16 0c10.4 0 20.3 1.6 29.7 4.7-13-75.3-78.6-132.7-157.7-132.7z"
+        ></path>
+      </svg>
+    </div>
+    <div>
+      <div class="text-sm font-semibold text-gray-700">Need Help?</div>
+      <div class="text-sm text-green-600">Contact Support</div>
+    </div></a
+  >
+</div>
