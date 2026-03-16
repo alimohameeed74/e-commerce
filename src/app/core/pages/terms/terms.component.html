@@ -1,3 +1,51 @@
-<p>
-  terms works!
-</p>
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  <div class="bg-gradient-to-br from-green-600 via-green-500 to-green-400 text-white">
+    <div class="container mx-auto px-4 py-12 sm:py-16">
+      <nav class="flex items-center gap-2 text-sm text-white/70 mb-8">
+        <a class="hover:text-white transition-colors duration-200" routerLink="/">Home</a
+        ><span class="text-white/40">/</span
+        ><span class="text-white font-medium">Terms of Service </span>
+      </nav>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+        <div
+          class="w-20 h-20 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-primary-900/30 ring-1 ring-white/30"
+        >
+          <i class="fa-solid fa-shield-halved text-4xl"></i>
+        </div>
+        <div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+            Terms of Service
+          </h1>
+          <p class="text-white/80 mt-2 text-lg">Last updated: February 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mx-auto px-4 py-12">
+    <div
+      class="bg-gradient-to-r from-amber-50 to-amber-100/50 border border-amber-200 rounded-3xl p-6 sm:p-8 mb-12 shadow-sm"
+    >
+      <div class="flex items-start gap-4">
+        <div
+          class="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/25"
+        >
+          <i class="fa-solid fa-file-contract text-xl text-white"></i>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-amber-900 mb-2">Important Notice</h2>
+          <p class="text-amber-800 leading-relaxed">
+            By accessing and using FreshCart, you accept and agree to be bound by the terms and
+            provisions of this agreement. Please read these terms carefully before using our
+            services.
+          </p>
+        </div>
+      </div>
+    </div>
+    <app-privacy-terms-cards [Crads]="termsCrads()"></app-privacy-terms-cards>
+
+    <app-privacy-terms-footer
+      [link]="'privacy'"
+      [view]="'Privacy Policy'"
+    ></app-privacy-terms-footer>
+  </div>
+</div>
