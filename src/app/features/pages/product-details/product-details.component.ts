@@ -7,18 +7,31 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { ProductDiscountPipe } from '../../pipes/product/productDiscount.pipe.js';
 import { initFlowbite } from 'flowbite';
+import { ProductDetailsTabComponent } from '../../components/product-details-tab/product-details-tab.component';
+import { ProductReturnsTabComponent } from '../../components/product-returns-tab/product-returns-tab.component';
+import { ProductReviewsTabComponent } from '../../components/product-reviews-tab/product-reviews-tab.component';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
-  imports: [RouterLink, CurrencyPipe, ProductDiscountPipe],
+  imports: [
+    RouterLink,
+    CurrencyPipe,
+    ProductDiscountPipe,
+    ProductDetailsTabComponent,
+    ProductReturnsTabComponent,
+    ProductReviewsTabComponent,
+  ],
 })
-export class ProductDetailsComponent implements OnInit, AfterViewInit {
+export class ProductDetailsComponent implements OnInit {
   product: WritableSignal<Iproduct | null> = signal(null);
   productAvgRate: WritableSignal<number> = signal(0);
   starsArr: WritableSignal<string[]> = signal([]);
   isAvgRateFloat: WritableSignal<boolean> = signal(false);
+  productDetailsTab: WritableSignal<boolean> = signal(true);
+  productReviewsTab: WritableSignal<boolean> = signal(false);
+  productReturnsTab: WritableSignal<boolean> = signal(false);
   constructor(
     private productsService: ProductsService,
     private nxSpinnerService: NgxSpinnerService,
@@ -66,7 +79,19 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    initFlowbite();
+  showProductDetailsTab() {
+    this.productDetailsTab.set(true);
+    this.productReviewsTab.set(false);
+    this.productReturnsTab.set(false);
+  }
+  showProductReviewsTab() {
+    this.productDetailsTab.set(false);
+    this.productReviewsTab.set(true);
+    this.productReturnsTab.set(false);
+  }
+  showProductReturnsTab() {
+    this.productDetailsTab.set(false);
+    this.productReviewsTab.set(false);
+    this.productReturnsTab.set(true);
   }
 }

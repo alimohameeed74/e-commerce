@@ -47,6 +47,13 @@ export const routes: Routes = [
       import('./features/pages/categories/categories.component').then((p) => p.CategoriesComponent),
   },
   {
+    path: 'categories/:id',
+    loadComponent: () =>
+      import('./features/pages/subcategory/subcategory.component').then(
+        (p) => p.SubcategoryComponent,
+      ),
+  },
+  {
     path: 'brands',
     loadComponent: () =>
       import('./features/pages/brands/brands.component').then((p) => p.BrandsComponent),

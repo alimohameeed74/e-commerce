@@ -3,4 +3,6 @@ export interface IsubCategory {
   name: string;
   slug: string;
   category: string;
+  createdAt: string;
+  updatedAt: string;
 }

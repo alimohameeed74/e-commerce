@@ -313,19 +313,14 @@
     <div class="w-full bg-neutral-green border border-default rounded-base shadow-xs">
       <ul
         class="flex flex-wrap text-sm font-medium text-center text-body bg-neutral-secondary-soft border-b border-default rounded-t-base"
-        id="defaultTab"
-        data-tabs-toggle="#defaultTabContent"
-        role="tablist"
       >
         <li class="me-2">
           <button
-            id="about-tab"
-            data-tabs-target="#about"
-            type="button"
-            role="tab"
-            aria-controls="about"
-            aria-selected="true"
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+            (click)="showProductDetailsTab()"
+            [class]="
+              productDetailsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
+            "
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-box text-sm"></i>
             Product Details
@@ -333,26 +328,22 @@
         </li>
         <li class="me-2">
           <button
-            id="services-tab"
-            data-tabs-target="#services"
-            type="button"
-            role="tab"
-            aria-controls="services"
-            aria-selected="false"
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+            (click)="showProductReviewsTab()"
+            [class]="
+              productReviewsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
+            "
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-star text-sm"></i>Reviews ({{ product()?.reviews?.length }})
           </button>
         </li>
         <li class="me-2">
           <button
-            id="statistics-tab"
-            data-tabs-target="#statistics"
-            type="button"
-            role="tab"
-            aria-controls="statistics"
-            aria-selected="false"
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-all duration-200 text-primary-600 border-b-2 border-primary-600 bg-primary-50/50"
+            (click)="showProductReturnsTab()"
+            [class]="
+              productReturnsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
+            "
+            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-truck text-sm"></i>
             Shipping &amp; Returns
@@ -360,88 +351,26 @@
         </li>
       </ul>
       <div id="defaultTabContent">
-        <div
-          class="p-4 rounded-b-base md:p-8"
-          id="about"
-          role="tabpanel"
-          aria-labelledby="about-tab"
-        >
-          ali
-          <!-- <div class="space-y-6">
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900 mb-3">About this Product</h3>
-              <p class="text-gray-600 leading-relaxed">
-                {{ product()?.description }}
-              </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="bg-gray-50 rounded-lg p-4">
-                <h4 class="font-medium text-gray-900 mb-3">Product Information</h4>
-                <ul class="space-y-2">
-                  <li class="flex justify-between text-sm">
-                    <span class="text-gray-500">Category</span
-                    ><span class="text-gray-900 font-medium">{{ product()?.category?.name }}</span>
-                  </li>
-                  <li class="flex justify-between text-sm">
-                    <span class="text-gray-500">Subcategory</span
-                    ><span class="text-gray-900 font-medium">{{
-                      product()!.subcategory[0]!.name
-                    }}</span>
-                  </li>
-                  <li class="flex justify-between text-sm">
-                    <span class="text-gray-500">Brand</span
-                    ><span class="text-gray-900 font-medium">{{ product()?.brand?.name }}</span>
-                  </li>
-                  <li class="flex justify-between text-sm">
-                    <span class="text-gray-500">Items Sold</span
-                    ><span class="text-gray-900 font-medium">{{ product()?.sold }}+ sold</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="bg-gray-50 rounded-lg p-4">
-                <h4 class="font-medium text-gray-900 mb-3">Key Features</h4>
-                <ul class="space-y-2">
-                  <li class="flex items-center text-sm text-gray-600">
-                    <i class="fa-solid fa-check text-green-600 mr-2 w-4"></i>
-                    Premium Quality Product
-                  </li>
-                  <li class="flex items-center text-sm text-gray-600">
-                    <i class="fa-solid fa-check text-green-600 mr-2 w-4"></i>
-
-                    100% Authentic Guarantee
-                  </li>
-                  <li class="flex items-center text-sm text-gray-600">
-                    <i class="fa-solid fa-check text-green-600 mr-2 w-4"></i>
-
-                    Fast &amp; Secure Packaging
-                  </li>
-                  <li class="flex items-center text-sm text-gray-600">
-                    <i class="fa-solid fa-check text-green-600 mr-2 w-4"></i>
-
-                    Quality Tested
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
+        <div [class]="productDetailsTab() ? '' : 'hidden'" class="p-4 rounded-b-base md:p-8">
+          <app-product-details-tab
+            [brand]="product()!.brand!.name"
+            [category]="product()!.category!.name"
+            [itemsSold]="product()!.sold"
+            [subCategory]="product()!.subcategory[0]!.name"
+            [productDesc]="product()!.description"
+          ></app-product-details-tab>
         </div>
 
-        <div
-          class="p-4 rounded-b-base md:p-8"
-          id="services"
-          role="tabpanel"
-          aria-labelledby="services-tab"
-        >
-          'ali'
+        <div [class]="productReviewsTab() ? '' : 'hidden'" class="p-4 rounded-b-base md:p-8">
+          <app-product-reviews-tab
+            [stars]="starsArr()"
+            [productReviewsCount]="product()!.reviews!.length"
+            [productAvgRate]="product()!.ratingsAverage"
+          ></app-product-reviews-tab>
         </div>
 
-        <div
-          class="p-4 rrounded-b-base md:p-8"
-          id="statistics"
-          role="tabpanel"
-          aria-labelledby="statistics-tab"
-        >
-          ali
+        <div [class]="productReturnsTab() ? '' : 'hidden'" class="p-4 rrounded-b-base md:p-8">
+          <app-product-returns-tab></app-product-returns-tab>
         </div>
       </div>
     </div>
