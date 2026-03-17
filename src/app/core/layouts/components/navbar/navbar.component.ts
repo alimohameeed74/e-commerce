@@ -18,7 +18,6 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent implements OnInit {
   showSideBar: WritableSignal<boolean> = signal(false);
   @ViewChild('toggler') toggler!: ElementRef;
-  @ViewChild('sidebar') sidebar!: ElementRef;
   constructor() {}
 
   ngOnInit() {}
@@ -30,10 +29,6 @@ export class NavbarComponent implements OnInit {
     this.showSideBar.set(false);
   }
   @HostListener('document:click', ['$event']) function(e: Event) {
-    if (
-      !this.toggler.nativeElement.contains(e.target) &&
-      !this.sidebar.nativeElement.contains(e.target)
-    )
-      this.closeSideBar();
+    if (!this.toggler.nativeElement.contains(e.target)) this.closeSideBar();
   }
 }
