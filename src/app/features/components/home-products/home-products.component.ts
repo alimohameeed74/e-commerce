@@ -4,12 +4,13 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { SharedTitleComponent } from '../../../shared/components/shared-title/shared-title.component';
 import { Iproduct } from '../../models/product/Iproduct.js';
 import { IapiResponse } from '../../models/api-response/Iapi-response.js';
+import { ContentLoaderComponent } from '../../../core/layouts/components/content-loader/content-loader.component';
 
 @Component({
   selector: 'app-home-products',
   templateUrl: './home-products.component.html',
   styleUrls: ['./home-products.component.css'],
-  imports: [ProductCardComponent, SharedTitleComponent],
+  imports: [ProductCardComponent, SharedTitleComponent, ContentLoaderComponent],
 })
 export class HomeProductsComponent implements OnInit {
   products: WritableSignal<Iproduct[]> = signal([]);

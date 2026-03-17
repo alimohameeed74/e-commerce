@@ -3,7 +3,7 @@ export interface IapiResponse<T> {
   metadata?: {
     currentPage: number;
     numberOfPages: number;
-    limit: number;
+    limit?: number;
     nextPage?: number;
   };
   data: T;

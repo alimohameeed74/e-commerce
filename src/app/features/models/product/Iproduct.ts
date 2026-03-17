@@ -1,7 +1,12 @@
+import { Ibrand } from '../brand/Ibrand';
+import { Icategory } from '../category/Icategory';
+import { Ireview } from '../review/Ireview.js';
+import { IsubCategory } from '../subcategory/Isub-category';
+
 export interface Iproduct {
   sold: number;
   images: string[];
-  subcategory: ISubcategory[];
+  subcategory: IsubCategory[];
   ratingsQuantity: number;
   _id: string;
   title: string;
@@ -11,31 +16,11 @@ export interface Iproduct {
   price: number;
   priceAfterDiscount?: number;
   imageCover: string;
-  category: ICategory;
-  brand: IBrand;
+  category: Icategory;
+  brand: Ibrand;
   ratingsAverage: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   id: string;
-}
-
-export interface ISubcategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
-}
-
-export interface ICategory {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}
-
-export interface IBrand {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
+  reviews?: Ireview[];
 }
