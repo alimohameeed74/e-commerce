@@ -10,56 +10,20 @@
       <p class="text-sm text-gray-500 mt-2">Based on {{ productReviewsCount() }} reviews</p>
     </div>
     <div class="flex-1 w-full">
-      <div class="flex items-center gap-3 mb-2">
-        <span class="text-sm text-gray-600 w-8">5 star</span>
-        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-yellow-400 rounded-full transition-all duration-300"
-            style="width: 25%"
-          ></div>
+      @for (item of reviewsObj(); track $index) {
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-sm text-gray-600 w-8">{{ item.starNum }} star</span>
+          <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              class="h-full bg-yellow-400 rounded-full transition-all duration-300"
+              [style]="`width: ${item.percent}%`"
+            ></div>
+          </div>
+          <span class="text-sm text-gray-500 w-10">{{ item.percent }}%</span>
         </div>
-        <span class="text-sm text-gray-500 w-10">25%</span>
-      </div>
-      <div class="flex items-center gap-3 mb-2">
-        <span class="text-sm text-gray-600 w-8">4 star</span>
-        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-yellow-400 rounded-full transition-all duration-300"
-            style="width: 60%"
-          ></div>
-        </div>
-        <span class="text-sm text-gray-500 w-10">60%</span>
-      </div>
-      <div class="flex items-center gap-3 mb-2">
-        <span class="text-sm text-gray-600 w-8">3 star</span>
-        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-yellow-400 rounded-full transition-all duration-300"
-            style="width: 25%"
-          ></div>
-        </div>
-        <span class="text-sm text-gray-500 w-10">25%</span>
-      </div>
-      <div class="flex items-center gap-3 mb-2">
-        <span class="text-sm text-gray-600 w-8">2 star</span>
-        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-yellow-400 rounded-full transition-all duration-300"
-            style="width: 5%"
-          ></div>
-        </div>
-        <span class="text-sm text-gray-500 w-10">5%</span>
-      </div>
-      <div class="flex items-center gap-3 mb-2">
-        <span class="text-sm text-gray-600 w-8">1 star</span>
-        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-yellow-400 rounded-full transition-all duration-300"
-            style="width: 5%"
-          ></div>
-        </div>
-        <span class="text-sm text-gray-500 w-10">5%</span>
-      </div>
+      } @empty {
+        <div class="flex items-center justify-center gap-3 mb-2">No reviews yet</div>
+      }
     </div>
   </div>
   <div class="border-t border-gray-200 pt-6">

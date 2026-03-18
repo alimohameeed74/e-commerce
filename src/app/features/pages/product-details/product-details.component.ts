@@ -6,10 +6,10 @@ import { IapiResponseSingleData } from '../../models/api-response-single-data/Ia
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { ProductDiscountPipe } from '../../pipes/product/productDiscount.pipe.js';
-import { initFlowbite } from 'flowbite';
 import { ProductDetailsTabComponent } from '../../components/product-details-tab/product-details-tab.component';
 import { ProductReturnsTabComponent } from '../../components/product-returns-tab/product-returns-tab.component';
 import { ProductReviewsTabComponent } from '../../components/product-reviews-tab/product-reviews-tab.component';
+import { HomeProductsComponent } from '../../components/home-products/home-products.component';
 
 @Component({
   selector: 'app-product-details',
@@ -22,6 +22,8 @@ import { ProductReviewsTabComponent } from '../../components/product-reviews-tab
     ProductDetailsTabComponent,
     ProductReturnsTabComponent,
     ProductReviewsTabComponent,
+
+    HomeProductsComponent,
   ],
 })
 export class ProductDetailsComponent implements OnInit {
@@ -39,6 +41,7 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.showProductDetailsTab();
     this.activatedRoute.paramMap.subscribe((param) => {
       const id = param.get('id');
       if (id) {
@@ -68,6 +71,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   stars() {
+    this.starsArr.set([]);
     for (let i = 0; i < this.productAvgRate(); i++) {
       this.starsArr().push('fa-solid fa-star');
     }

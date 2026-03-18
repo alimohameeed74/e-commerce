@@ -34,23 +34,41 @@
 
         <span class="w-px h-4 bg-gray-200"></span>
 
-        <div class="flex items-center gap-4">
-          <a
-            class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
-            routerLink="/login"
-          >
-            <i class="fa-regular fa-user text-xs"></i>
-            <span>Sign In</span>
-          </a>
+        @if (!isUserLogin) {
+          <div class="flex items-center gap-4">
+            <a
+              class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
+              routerLink="/login"
+            >
+              <i class="fa-regular fa-user text-xs"></i>
+              <span>Sign In</span>
+            </a>
 
-          <a
-            class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
-            routerLink="/register"
-          >
-            <i class="fa-solid fa-user-plus text-xs"></i>
-            <span>Sign Up</span>
-          </a>
-        </div>
+            <a
+              class="flex items-center gap-1.5 text-gray-600 hover:text-green-600 transition-colors"
+              routerLink="/register"
+            >
+              <i class="fa-solid fa-user-plus text-xs"></i>
+              <span>Sign Up</span>
+            </a>
+          </div>
+        } @else {
+          <div class="flex items-center gap-4">
+            <a
+              class="flex items-center gap-1.5 text-gray-600 hover:text-primary-600 transition-colors"
+              routerLink="/profile"
+            >
+              <i class="fa-solid fa-user text-xs"></i>
+              <span>{{ userData.name }}</span></a
+            ><button
+              (click)="signOut()"
+              class="flex items-center gap-1.5 text-gray-600 hover:text-red-500 transition-colors"
+            >
+              <i class="fa-solid fa-right-from-bracket text-xs"></i>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        }
       </div>
     </div>
   </div>

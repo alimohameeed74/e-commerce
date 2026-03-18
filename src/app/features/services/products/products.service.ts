@@ -19,4 +19,9 @@ export class ProductsService {
       `${environment.apiURL}/products/${id}`,
     );
   }
+  getLimitedProducts(limit: number): Observable<IapiResponse<Iproduct[]>> {
+    return this.httpClient.get<IapiResponse<Iproduct[]>>(
+      `${environment.apiURL}/products?limit=${limit}`,
+    );
+  }
 }

@@ -366,6 +366,7 @@
             [stars]="starsArr()"
             [productReviewsCount]="product()!.reviews!.length"
             [productAvgRate]="product()!.ratingsAverage"
+            [productReviews]="product()!.reviews!"
           ></app-product-reviews-tab>
         </div>
 
@@ -376,3 +377,5 @@
     </div>
   </div>
 }
+
+<app-home-products></app-home-products>

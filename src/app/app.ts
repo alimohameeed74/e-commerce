@@ -4,6 +4,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NavbarComponent } from './core/layouts/components/navbar/navbar.component';
 import { FooterComponent } from './core/layouts/components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './core/auth/services/auth.service.js';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,9 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('e-commerce');
+  constructor(private authService: AuthService) {}
   ngOnInit(): void {
     initFlowbite();
+    this.authService.init();
   }
 }

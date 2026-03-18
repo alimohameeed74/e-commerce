@@ -24,77 +24,380 @@
       >
         <span class="sr-only">or</span>
       </div>
-      <form class="space-y-7">
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-7">
         <div class="flex flex-col gap-2">
           <label for="name">Name*</label
           ><input
             id="name"
-            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-            placeholder="Ali"
+            class="border valid border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
+            placeholder="write your name"
             aria-invalid="false"
             type="text"
             name="name"
+            formControlName="name"
           />
         </div>
+        @if (nameController?.touched && nameController?.errors) {
+          @if (nameController?.hasError('required')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>name is required.</p>
+            </div>
+          }
+          @if (nameController?.hasError('pattern')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Name must have 3 characters at least.</p>
+            </div>
+          }
+        }
+
         <div class="flex flex-col gap-2">
           <label for="email">Email*</label
           ><input
             id="email"
-            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
             placeholder="ali@example.com"
             autocomplete="email"
             aria-invalid="false"
             type="email"
             name="email"
+            formControlName="email"
           />
         </div>
+        @if (emailController?.touched && emailController?.errors) {
+          @if (emailController?.hasError('required')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Email is required.</p>
+            </div>
+          }
+          @if (emailController?.hasError('email')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Enter a valid email.</p>
+            </div>
+          }
+        }
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 relative">
           <label for="password">Password*</label
           ><input
             id="password"
-            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
             placeholder="create a strong password"
             autocomplete="new-password"
             aria-invalid="false"
-            type="password"
+            [type]="showPassword() ? 'text' : 'password'"
             name="password"
+            formControlName="password"
           />
+          <i
+            (click)="togglePass()"
+            [class]="showPassword() ? 'fa-eye-slash' : 'fa-eye'"
+            class="fa-solid text-gray-500 hover:text-gray-700 text-sm absolute top-10/16 right-2"
+          ></i>
         </div>
 
-        <div class="flex flex-col gap-2">
+        @if (passwordController?.touched && passwordController?.errors) {
+          @if (passwordController?.hasError('required')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Password is required.</p>
+            </div>
+          }
+          @if (passwordController?.hasError('pattern')) {
+            <p [class.text-success]="hasLowerCase()" [class.text-danger]="!hasLowerCase()">
+              <i [class]="hasLowerCase() ? 'fa-check' : 'fa-xmark'" class="fa-solid"></i> One
+              lowercase letter
+            </p>
+
+            <p [class.text-success]="hasUpperCase()" [class.text-danger]="!hasUpperCase()">
+              <i class="fa-solid" [class]="hasUpperCase() ? 'fa-check' : 'fa-xmark'"></i> One
+              uppercase letter
+            </p>
+
+            <p [class.text-success]="hasNumber()" [class.text-danger]="!hasNumber()">
+              <i class="fa-solid" [class]="hasNumber() ? 'fa-check' : 'fa-xmark'"></i> One number
+            </p>
+
+            <p [class.text-success]="hasSpecialChar()" [class.text-danger]="!hasSpecialChar()">
+              <i class="fa-solid" [class]="hasSpecialChar() ? 'fa-check' : 'fa-xmark'"></i> One
+              special character
+            </p>
+
+            <p
+              [class.text-success]="passwordController?.value?.length >= 8"
+              [class.text-danger]="passwordController?.value?.length < 8"
+            >
+              <i
+                class="fa-solid"
+                [class]="passwordController?.value?.length >= 8 ? 'fa-check' : 'fa-xmark'"
+              ></i>
+              At least 8 characters
+            </p>
+          }
+        }
+
+        <div class="flex flex-col gap-2 relative">
           <label for="rePassword">Confirm Password*</label
           ><input
             id="rePassword"
-            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
             placeholder="confirm your password"
             autocomplete="new-password"
             aria-invalid="false"
-            type="password"
+            [type]="showRePassword() ? 'text' : 'password'"
             name="rePassword"
+            formControlName="rePassword"
           />
+          <i
+            (click)="toggleRePass()"
+            [class]="showRePassword() ? 'fa-eye-slash' : 'fa-eye'"
+            class="fa-solid text-gray-500 hover:text-gray-700 text-sm absolute top-10/16 right-2"
+          ></i>
         </div>
+        @if (rePasswordController?.touched && rePasswordController?.errors) {
+          @if (rePasswordController?.hasError('required')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Confirm password is required.</p>
+            </div>
+          }
+        }
+        @if (rePasswordController?.touched) {
+          <p
+            [class.text-success]="rePasswordController?.value === passwordController?.value"
+            [class.text-danger]="rePasswordController?.value !== passwordController?.value"
+          >
+            <i
+              class="fa-solid"
+              [class]="
+                rePasswordController?.value === passwordController?.value ? 'fa-check' : 'fa-xmark'
+              "
+            ></i>
+            Both passwords
+            {{
+              rePasswordController?.value === passwordController?.value
+                ? 'are matched.'
+                : 'must match.'
+            }}
+          </p>
+        }
+
         <div class="flex flex-col gap-2">
           <label for="phone">Phone Number*</label
           ><input
             id="phone"
-            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-            placeholder="+1 234 567 8900"
+            class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
+            placeholder="ex. 01283217414"
             autocomplete="tel"
             aria-invalid="false"
             type="tel"
             name="phone"
+            formControlName="phone"
           />
         </div>
+        @if (phoneController?.touched && phoneController?.errors) {
+          @if (phoneController?.hasError('required')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Phone is required.</p>
+            </div>
+          }
+          @if (phoneController?.hasError('pattern')) {
+            <div
+              class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+              role="alert"
+            >
+              <svg
+                class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <p>Enter a valid phone number.</p>
+            </div>
+          }
+        }
 
         <button
-          type="button"
+          [disabled]="registerForm.invalid"
+          type="submit"
           class="py-3 rounded-md bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed w-full transition-colors"
           aria-busy="false"
         >
           <i class="fa-solid fa-user-plus me-2"> </i>
           <span>Create My Account</span>
         </button>
+        <div
+          [class]="registerForm.valid ? 'hidden' : 'flex'"
+          class="items-start sm:items-center p-4 mb-4 text-sm text-fg-warning rounded-base bg-warning-soft"
+          role="alert"
+        >
+          <svg
+            class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          <p><span class="font-medium me-1">Please!</span> Fill in the fields above correctly.</p>
+        </div>
       </form>
       <p class="border-t pt-10 border-gray-300/30 my-4 text-center">
         Already have an account?
