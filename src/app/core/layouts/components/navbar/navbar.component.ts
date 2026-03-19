@@ -19,6 +19,7 @@ import { AuthService } from '../../../auth/services/auth.service.js';
 export class NavbarComponent implements OnInit {
   showSideBar: WritableSignal<boolean> = signal(false);
   @ViewChild('toggler') toggler!: ElementRef;
+  @ViewChild('sidebar') sidebar!: ElementRef;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}

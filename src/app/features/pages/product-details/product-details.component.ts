@@ -41,10 +41,10 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.showProductDetailsTab();
     this.activatedRoute.paramMap.subscribe((param) => {
       const id = param.get('id');
       if (id) {
+        this.showProductDetailsTab();
         this.getProductDetails(id);
       }
     });

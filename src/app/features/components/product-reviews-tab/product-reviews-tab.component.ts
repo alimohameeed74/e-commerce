@@ -46,7 +46,7 @@ export class ProductReviewsTabComponent implements OnInit, OnChanges {
     this.reviewsObj().push({
       starNum: rate,
       count: this.counter,
-      percent: `${(this.counter / this.productReviews().length) * 100}`,
+      percent: `${Math.round((this.counter / this.productReviews().length) * 100)}`,
     });
   }
 }
