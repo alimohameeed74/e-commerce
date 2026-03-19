@@ -1,7 +1,7 @@
 <div
   class="group bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-xl hover:border-green-200 transition-all duration-300 hover:-translate-y-1"
 >
-  <a [routerLink]="`/products?subcategory=${subcategory()._id}`"
+  <a routerLink="/products-filter" [queryParams]="{ subcategory: subcategory()._id }"
     ><div
       class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center mb-4 group-hover:bg-green-100 transition-colors"
     >

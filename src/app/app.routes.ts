@@ -59,6 +59,13 @@ export const routes: Routes = [
       import('./features/pages/brands/brands.component').then((p) => p.BrandsComponent),
   },
   {
+    path: 'products-filter',
+    loadComponent: () =>
+      import('./shared/components/shared-data-filter/shared-data-filter.component').then(
+        (p) => p.SharedDataFilterComponent,
+      ),
+  },
+  {
     path: 'contact',
     loadComponent: () =>
       import('./features/pages/contact/contact.component').then((p) => p.ContactComponent),

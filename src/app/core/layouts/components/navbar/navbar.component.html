@@ -133,22 +133,26 @@
                 >
                 <a
                   class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
-                  routerLink="/"
+                  routerLink="/products-filter"
+                  [queryParams]="{ category: '6439d2d167d9aa4ca970649f' }"
                   >Electronics</a
                 >
                 <a
                   class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
-                  routerLink="/"
+                  routerLink="/products-filter"
+                  [queryParams]="{ category: '6439d58a0049ad0b52b9003f' }"
                   >Women's Fashion</a
                 >
                 <a
                   class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
-                  routerLink="/"
+                  routerLink="/products-filter"
+                  [queryParams]="{ category: '6439d5b90049ad0b52b90048' }"
                   >Men's Fashion</a
                 >
                 <a
                   class="block px-4 py-2.5 text-gray-600 hover:text-green-600 hover:bg-green-100 transition-colors"
-                  routerLink="/"
+                  routerLink="/products-filter"
+                  [queryParams]="{ category: '6439d30b67d9aa4ca97064b1' }"
                   >Beauty & Health</a
                 >
               </div>
@@ -201,13 +205,81 @@
             </span>
           </a>
 
-          <a
-            class="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-primary-600/20"
-            routerLink="/login"
-          >
-            <i class="fa-regular fa-user text-xs"></i>
-            Sign In
-          </a>
+          @if (isUserLogin) {
+            <div #userInfoList class="relative hidden lg:inline">
+              <button
+                (click)="showUserInfo()"
+                class="relative p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                title="Account"
+              >
+                <i
+                  class="fa-solid fa-circle-user text-xl text-gray-500 group-hover:text-primary-600 transition-colors"
+                ></i>
+              </button>
+
+              <div
+                [class]="showUserInfoList() ? '' : 'hidden'"
+                class="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-100 rounded-2xl shadow-xl transition-all duration-200 origin-top-right opacity-100 scale-100 visible"
+              >
+                <div class="p-4 border-b border-gray-100">
+                  <div class="flex items-center gap-3">
+                    <div
+                      class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"
+                    >
+                      <i class="fa-solid fa-circle-user text-xl text-green-600"></i>
+                    </div>
+                    <div class="min-w-0">
+                      <p class="text-sm font-semibold text-gray-800 truncate">
+                        {{ userData.name }}
+                      </p>
+                      <p class="text-xs text-gray-400 truncate"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="py-2">
+                  <a
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                    routerLink="/profile"
+                  >
+                    <i class="fa-regular fa-user w-4 text-gray-400"></i>
+                    My Profile</a
+                  ><a
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                    routerLink="/orders"
+                    ><i class="fa-solid fa-box-open w-4 text-gray-400"></i>My Orders</a
+                  ><a
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                    routerLink="/wishlist"
+                    ><i class="fa-regular fa-heart w-4 text-gray-400"></i>My Wishlist</a
+                  ><a
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                    routerLink="/profile/addresses"
+                    ><i class="fa-regular fa-address-book w-4 text-gray-400"></i>Addresses</a
+                  ><a
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                    routerLink="/profile/settings"
+                    ><i class="fa-solid fa-gear w-4 text-gray-400"></i>Settings</a
+                  >
+                </div>
+                <div class="border-t border-gray-100 py-2">
+                  <button
+                    (click)="signOut()"
+                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left"
+                  >
+                    <i class="fa-solid fa-right-from-bracket w-4"></i>Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <a
+              class="hidden lg:flex items-center gap-2 ml-2 px-5 py-2.5 rounded-full bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-primary-600/20"
+              routerLink="/login"
+            >
+              <i class="fa-regular fa-user text-xs"></i>
+              Sign In
+            </a>
+          }
 
           <button
             #toggler

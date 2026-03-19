@@ -24,4 +24,10 @@ export class ProductsService {
       `${environment.apiURL}/products?limit=${limit}`,
     );
   }
+
+  getProductsBy(data: string, id: string): Observable<IapiResponse<Iproduct[]>> {
+    return this.httpClient.get<IapiResponse<Iproduct[]>>(
+      `${environment.apiURL}/products?${data}=${id}`,
+    );
+  }
 }

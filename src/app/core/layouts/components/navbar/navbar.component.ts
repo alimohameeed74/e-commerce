@@ -18,8 +18,10 @@ import { AuthService } from '../../../auth/services/auth.service.js';
 })
 export class NavbarComponent implements OnInit {
   showSideBar: WritableSignal<boolean> = signal(false);
+  showUserInfoList: WritableSignal<boolean> = signal(false);
   @ViewChild('toggler') toggler!: ElementRef;
   @ViewChild('sidebar') sidebar!: ElementRef;
+  @ViewChild('userInfoList') userInfoList!: ElementRef;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}
@@ -36,11 +38,22 @@ export class NavbarComponent implements OnInit {
     this.showSideBar.set(false);
   }
   @HostListener('document:click', ['$event']) function(e: Event) {
-    if (!this.toggler.nativeElement.contains(e.target)) this.closeSideBar();
+    if (this.toggler) {
+      if (!this.toggler.nativeElement.contains(e.target)) this.closeSideBar();
+    }
+    if (this.userInfoList) {
+      if (!this.userInfoList.nativeElement.contains(e.target)) this.closeUserInfo();
+    }
   }
   signOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     this.authService.userLogout();
+  }
+  showUserInfo() {
+    this.showUserInfoList.update((p) => !p);
+  }
+  closeUserInfo() {
+    this.showUserInfoList.set(false);
   }
 }
