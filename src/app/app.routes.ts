@@ -108,6 +108,13 @@ export const routes: Routes = [
       import('./core/auth/pages/register/register.component').then((p) => p.RegisterComponent),
   },
   {
+    path: 'forget-password',
+    loadComponent: () =>
+      import('./core/auth/pages/forget-password/forget-password.component').then(
+        (p) => p.ForgetPasswordComponent,
+      ),
+  },
+  {
     path: 'privacy',
     loadComponent: () =>
       import('./core/pages/privacy/privacy.component').then((p) => p.PrivacyComponent),

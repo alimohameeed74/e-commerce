@@ -77,10 +77,11 @@
         }
       </div>
       <button
+        (click)="addProductToUserCart(product()._id)"
         class="h-10 w-10 rounded-full flex items-center justify-center transition bg-green-600 text-white hover:bg-green-700 disabled:opacity-70"
         tabindex="0"
       >
-        <i class="fa-solid fa-plus"></i>
+        <i [class]="isloading() ? 'fa-spin fa-spinner' : 'fa-plus'" class="fa-solid"></i>
       </button>
     </div>
   </div>

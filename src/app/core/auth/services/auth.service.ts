@@ -6,6 +6,8 @@ import { IapiAuthResponse } from '../models/api-auth-response/Iapi-auth-response
 import { environment } from '../../../../environments/environment.development.js';
 import { Ilogin } from '../models/login/Ilogin.js';
 import { Iuser } from '../models/user/Iuser.js';
+import { IforgetPassword } from '../models/forget-password-response/Iforget-password.js';
+import { IforgetPasswordForm } from '../models/forget-password-form/Iforget-password-form.js';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +50,19 @@ export class AuthService {
   register(data: Iregister): Observable<IapiAuthResponse> {
     return this.httpClient.post<IapiAuthResponse>(`${environment.apiURL}/auth/signup`, data);
   }
-  forgetPassword() {}
+  forgotPassword(data: IforgetPasswordForm): Observable<IforgetPassword> {
+    return this.httpClient.post<IforgetPassword>(
+      `${environment.apiURL}/auth/forgotPasswords`,
+      data,
+    );
+  }
+  verifyResetPassword(data: IforgetPasswordForm): Observable<IforgetPassword> {
+    return this.httpClient.post<IforgetPassword>(
+      `${environment.apiURL}/auth/verifyResetCode`,
+      data,
+    );
+  }
+  resetPassword(data: IforgetPasswordForm): Observable<IforgetPassword> {
+    return this.httpClient.put<IforgetPassword>(`${environment.apiURL}/auth/resetPassword`, data);
+  }
 }

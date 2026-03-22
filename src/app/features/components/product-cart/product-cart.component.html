@@ -1,0 +1,83 @@
+<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-5 mb-4">
+  <div class="flex gap-4 sm:gap-6">
+    <a class="relative shrink-0 group" [routerLink]="`/products/${product().product._id}`"
+      ><div
+        class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl bg-gray-50 p-3 border border-gray-100 overflow-hidden"
+      >
+        <img
+          [alt]="product().product.title"
+          class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+          [src]="product().product.imageCover"
+        /></div
+    ></a>
+    <div class="flex-1 min-w-0 flex flex-col">
+      <div class="mb-3">
+        <a class="group/title" [routerLink]="`/products/${product().product._id}`"
+          ><h3
+            class="font-semibold text-gray-900 group-hover/title:text-green-600 transition-colors leading-relaxed text-base sm:text-lg"
+          >
+            {{ product().product.title }}
+          </h3></a
+        >
+        <div class="flex items-center gap-2 mt-2">
+          <span
+            class="inline-block px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full"
+            >{{ product().product.category.name }}</span
+          >
+        </div>
+      </div>
+      <div class="mb-4">
+        <span class="text-green-600 font-bold text-lg">{{
+          product().price | currency: 'EGP'
+        }}</span>
+      </div>
+      <div class="mt-auto flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200">
+          <button
+            (click)="decrease()"
+            [disabled]="product().count <= 1"
+            class="h-8 w-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-800 disabled:opacity-40 transition-all"
+          >
+            <i class="fa-solid fa-minus text-xs"></i></button
+          ><span class="w-12 text-center font-bold text-gray-900">{{ product().count }}</span
+          ><button
+            (click)="increase()"
+            class="h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+          >
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+          <button
+            [class]="increaseOrDecrease() ? '' : 'hidden'"
+            (click)="updatedProductFromCart(product().product._id, product().count)"
+            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+          >
+            <i
+              [class]="isLoading_() ? 'fa-spin fa-spinner' : 'fa-check'"
+              class="fa-solid text-xs"
+            ></i>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <p class="text-xs text-gray-400 mb-0.5">Total</p>
+            <p class="text-xl font-bold text-gray-900">
+              {{ product().price * product().count | currency: 'EGP' }}
+              <span class="text-sm font-medium text-gray-400">EGP</span>
+            </p>
+          </div>
+          <button
+            (click)="removeProductFromCart(product().product._id)"
+            class="h-10 w-10 rounded-xl border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 flex items-center justify-center transition-all duration-200"
+            title="Remove item"
+          >
+            <i
+              [class]="isLoading() ? 'fa-spin fa-spinner' : 'fa-trash'"
+              class="fa-solid text-sm"
+            ></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
