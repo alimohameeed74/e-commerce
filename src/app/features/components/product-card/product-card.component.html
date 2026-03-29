@@ -11,7 +11,7 @@
   <div class="relative">
     <img
       class="w-full h-60 object-contain bg-white"
-      alt="Woman Shawl"
+      [alt]="product().title"
       [src]="product().imageCover"
     />
     <div [class]="product().priceAfterDiscount ? '' : 'hidden'" class="absolute top-3 left-3">
@@ -21,11 +21,18 @@
     </div>
     <div class="absolute top-3 right-3 flex flex-col space-y-2">
       <button
-        class="bg-white h-8 w-8 rounded-full flex items-center justify-center transition shadow-sm text-gray-600 hover:text-red-500"
-        title="Add to wishlist"
+        (click)="
+          isFav()
+            ? removeProductToUserWishlist(product()._id)
+            : addProductToUserWishlist(product()._id)
+        "
+        [disabled]="isloading()"
+        class="bg-white h-8 w-8 rounded-full flex items-center justify-center transition shadow-sm hover:text-red-500 disabled:opacity-50"
+        [title]="isFav() ? 'Remove from wishlist' : 'Add to wishlist'"
         tabindex="0"
+        [class]="isFav() ? 'text-red-500' : 'text-gray-400'"
       >
-        <i class="fa-regular fa-heart"></i></button
+        <i [class]="isloading() ? 'fa-spin fa-spinner' : ' fa-heart'" class="fa-solid"></i></button
       ><button
         class="bg-white h-8 w-8 rounded-full flex items-center justify-center text-gray-600 hover:text-green-600 shadow-sm"
       >
@@ -41,9 +48,7 @@
   <div class="p-4">
     <div class="text-xs text-gray-500 mb-1">{{ product().category.name }}</div>
     <h3 class="font-medium mb-1 cursor-pointer" [title]="product().title">
-      <a class="line-clamp-2" routerLink="/products/6428ebc6dc1175abc65ca0b9">{{
-        product().title
-      }}</a>
+      <a class="line-clamp-2" [routerLink]="`/products/${product()._id}`">{{ product().title }}</a>
     </h3>
     <div class="flex items-center mb-2">
       <div class="flex text-amber-400 mr-2">
@@ -77,11 +82,12 @@
         }
       </div>
       <button
+        [disabled]="isloading_()"
         (click)="addProductToUserCart(product()._id)"
         class="h-10 w-10 rounded-full flex items-center justify-center transition bg-green-600 text-white hover:bg-green-700 disabled:opacity-70"
         tabindex="0"
       >
-        <i [class]="isloading() ? 'fa-spin fa-spinner' : 'fa-plus'" class="fa-solid"></i>
+        <i [class]="isloading_() ? 'fa-spin fa-spinner' : 'fa-plus'" class="fa-solid"></i>
       </button>
     </div>
   </div>

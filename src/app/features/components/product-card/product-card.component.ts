@@ -1,4 +1,4 @@
-import { Toast, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { CartsService } from './../../services/carts/carts.service';
 import {
   Component,
@@ -16,6 +16,8 @@ import { CurrencyPipe } from '@angular/common';
 import { ProductDiscountPipe } from '../../pipes/product/productDiscount.pipe.js';
 import { IcartApiResponse } from '../../models/cart-api-response/Icart-api-response.js';
 import { AuthService } from '../../../core/auth/services/auth.service.js';
+import { WishlistsService } from '../../services/wishlists/wishlists.service.js';
+import { IdeleteWishlistResponse } from '../../models/wishlist/Idelete-wishlist-response.js';
 
 @Component({
   selector: 'app-product-card',
@@ -29,8 +31,13 @@ export class ProductCardComponent implements OnInit, OnChanges {
   starsArr: WritableSignal<string[]> = signal([]);
   isAvgRateFloat: WritableSignal<boolean> = signal(false);
   isloading: WritableSignal<boolean> = signal(false);
+  isloading_: WritableSignal<boolean> = signal(false);
+  isFav: InputSignal<boolean> = input.required();
+  changedToFav = output<IdeleteWishlistResponse>();
+
   constructor(
     private cartsService: CartsService,
+    private wishlistService: WishlistsService,
     private toaster: ToastrService,
     private authService: AuthService,
   ) {}
@@ -44,6 +51,7 @@ export class ProductCardComponent implements OnInit, OnChanges {
       this.isAvgRateFloat.set(true);
     }
     this.stars();
+    console.log(this.isFav());
   }
   stars() {
     for (let i = 0; i < this.productAvgRate(); i++) {
@@ -68,10 +76,52 @@ export class ProductCardComponent implements OnInit, OnChanges {
       });
       return;
     }
-    this.isloading.set(true);
+    this.isloading_.set(true);
     this.cartsService.addProductToUserCart(id).subscribe({
       next: (res: IcartApiResponse) => {
+        this.isloading_.set(false);
+        this.toaster.success(res.message, res.status, {
+          timeOut: 2000,
+        });
+      },
+      error: (err) => {
+        this.toaster.error(err.message, err.status);
+      },
+    });
+  }
+  addProductToUserWishlist(id: string) {
+    if (!this.isUserLogged) {
+      this.toaster.warning('Please sign in first', 'Warning', {
+        timeOut: 2000,
+      });
+      return;
+    }
+    this.isloading.set(true);
+    this.wishlistService.addProductToUserWishlist(id).subscribe({
+      next: (res: IdeleteWishlistResponse) => {
         this.isloading.set(false);
+        this.changedToFav.emit(res);
+        this.toaster.success(res.message, res.status, {
+          timeOut: 2000,
+        });
+      },
+      error: (err) => {
+        this.toaster.error(err.message, err.status);
+      },
+    });
+  }
+  removeProductToUserWishlist(id: string) {
+    if (!this.isUserLogged) {
+      this.toaster.warning('Please sign in first', 'Warning', {
+        timeOut: 2000,
+      });
+      return;
+    }
+    this.isloading.set(true);
+    this.wishlistService.removeProductFromWishlist(id).subscribe({
+      next: (res: IdeleteWishlistResponse) => {
+        this.isloading.set(false);
+        this.changedToFav.emit(res);
         this.toaster.success(res.message, res.status, {
           timeOut: 2000,
         });

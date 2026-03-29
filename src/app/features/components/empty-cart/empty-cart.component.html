@@ -2,12 +2,13 @@
   <div class="max-w-md text-center mx-auto">
     <div class="relative mb-8">
       <div class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
-        <i class="fa-solid fa-box-open text-5xl text-gray-300"></i>
+        <i [class]="icon()" class="fa-solid text-5xl text-gray-300"></i>
       </div>
     </div>
-    <h2 class="text-2xl font-bold text-gray-900 mb-3">Your cart is empty</h2>
+    <h2 class="text-2xl font-bold text-gray-900 mb-3">Your {{ title() }} is empty</h2>
     <p class="text-gray-500 mb-8 leading-relaxed">
-      Looks like you haven't added anything to your cart yet.<br />Start exploring our products!
+      Looks like you haven't added anything to your {{ title() }} yet.<br />Start exploring our
+      products!
     </p>
     <a
       class="inline-flex items-center gap-2 bg-green-600 text-white py-3.5 px-8 rounded-xl font-semibold hover:bg-green-700 transition-all shadow-lg active:scale-[0.98]"

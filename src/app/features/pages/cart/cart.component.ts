@@ -26,7 +26,6 @@ export class CartComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService,
     private authService: AuthService,
     private toaster: ToastrService,
-    // private router: Router,
   ) {}
 
   ngOnInit() {

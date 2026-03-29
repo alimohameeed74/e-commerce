@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const globalInterceptor: HttpInterceptorFn = (req, next) => {
-  if (req.url.includes('cart')) {
+  if (req.url.includes('cart') || req.url.includes('wishlist')) {
     req = req.clone({
       setHeaders: {
         token: `${localStorage.getItem('token')}`,

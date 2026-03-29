@@ -29,7 +29,7 @@
               [product]="cart"
             ></app-product-cart>
           } @empty {
-            <app-empty-cart></app-empty-cart>
+            <app-empty-cart icon="fa-box-open" title="'cart'"></app-empty-cart>
           }
         </div>
         @if (carts().length !== 0) {

@@ -2,16 +2,14 @@ import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../features/services/products/products.service.js';
 import { Iproduct } from '../../../features/models/product/Iproduct.js';
-import { IapiAuthResponse } from '../../../core/auth/models/api-auth-response/Iapi-auth-response.js';
 import { IapiResponse } from '../../../features/models/api-response/Iapi-response.js';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ProductCardComponent } from '../../../features/components/product-card/product-card.component';
 
 @Component({
   selector: 'app-shared-data-filter',
   templateUrl: './shared-data-filter.component.html',
   styleUrls: ['./shared-data-filter.component.css'],
-  imports: [ProductCardComponent],
+  imports: [],
 })
 export class SharedDataFilterComponent implements OnInit {
   data: WritableSignal<Iproduct[]> = signal([]);

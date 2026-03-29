@@ -5,6 +5,10 @@ import { SharedTitleComponent } from '../../../shared/components/shared-title/sh
 import { Iproduct } from '../../models/product/Iproduct.js';
 import { IapiResponse } from '../../models/api-response/Iapi-response.js';
 import { ContentLoaderComponent } from '../../../core/layouts/components/content-loader/content-loader.component';
+import { WishlistsService } from '../../services/wishlists/wishlists.service.js';
+import { IwishlistResponse } from '../../models/wishlist/Iwishlist-response.js';
+import { IdeleteWishlistResponse } from '../../models/wishlist/Idelete-wishlist-response.js';
+import { AuthService } from '../../../core/auth/services/auth.service.js';
 
 @Component({
   selector: 'app-home-products',
@@ -14,10 +18,16 @@ import { ContentLoaderComponent } from '../../../core/layouts/components/content
 })
 export class HomeProductsComponent implements OnInit {
   products: WritableSignal<Iproduct[]> = signal([]);
-  constructor(private productsService: ProductsService) {}
+  wishlistIds: WritableSignal<string[]> = signal([]);
+  constructor(
+    private productsService: ProductsService,
+    private wishlistService: WishlistsService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {
     this.getAllProducts();
+    this.getUserWishlists();
   }
   getAllProducts() {
     this.productsService.getAllProducts().subscribe({
@@ -28,5 +38,24 @@ export class HomeProductsComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  get isUserLogin() {
+    return this.authService.getIsLoggedIn_;
+  }
+
+  getUserWishlists() {
+    if (!this.isUserLogin) return;
+    this.wishlistService.getLoggedUserWishlists().subscribe({
+      next: (res: IwishlistResponse) => {
+        this.wishlistIds.set(res.data.map((elem) => elem._id));
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  handelChange(event: IdeleteWishlistResponse) {
+    this.wishlistIds.set(event.data.map((elem) => elem));
   }
 }

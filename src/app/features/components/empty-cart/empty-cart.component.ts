@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, InputSignal, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/services/auth.service.js';
 
@@ -9,6 +9,8 @@ import { AuthService } from '../../../core/auth/services/auth.service.js';
   imports: [RouterLink],
 })
 export class EmptyCartComponent implements OnInit {
+  title: InputSignal<string> = input.required();
+  icon: InputSignal<string> = input.required();
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}
