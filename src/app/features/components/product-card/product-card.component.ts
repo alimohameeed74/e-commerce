@@ -51,18 +51,23 @@ export class ProductCardComponent implements OnInit, OnChanges {
       this.isAvgRateFloat.set(true);
     }
     this.stars();
-    console.log(this.isFav());
   }
   stars() {
+    const arr: string[] = [];
+
     for (let i = 0; i < this.productAvgRate(); i++) {
-      this.starsArr().push('fa-solid fa-star');
+      arr.push('fa-solid fa-star');
     }
+
     if (this.isAvgRateFloat()) {
-      this.starsArr().push('fa-solid fa-star-half-stroke');
+      arr.push('fa-solid fa-star-half-stroke');
     }
+
     for (let i = 0; i < 5 - Math.round(this.product().ratingsAverage); i++) {
-      this.starsArr().push('fa-regular fa-star');
+      arr.push('fa-regular fa-star');
     }
+
+    this.starsArr.set(arr);
   }
 
   get isUserLogged() {
