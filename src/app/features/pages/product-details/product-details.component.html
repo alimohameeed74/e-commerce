@@ -155,8 +155,8 @@
             <div class="flex items-center gap-3 mb-4">
               <div class="flex text-amber-400 mr-2">
                 <div class="text-yellow-400">
-                  @for (starsArr of starsArr(); track $index) {
-                    <i [class]="starsArr"></i>
+                  @for (star of starsArr(); track $index) {
+                    <i [class]="star"></i>
                   }
                 </div>
               </div>

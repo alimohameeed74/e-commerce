@@ -1,0 +1,382 @@
+<div class="bg-gradient-to-b from-gray-50 to-white min-h-screen py-8">
+  <div class="container mx-auto px-4">
+    <div class="mb-8">
+      <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <a class="hover:text-green-600 transition" routerLink="/">Home</a
+        ><span class="text-gray-300">/</span
+        ><a class="hover:text-green-600 transition" routerLink="/cart">Cart</a
+        ><span class="text-gray-300">/</span><span class="text-gray-900 font-medium">Checkout</span>
+      </nav>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-xl md:text-3xl font-bold text-gray-900 flex items-center gap-3">
+            <span
+              class="bg-gradient-to-br from-green-600 to-green-700 text-white w-10 h-10 p-4 rounded-xl flex items-center justify-center shadow-lg shadow-green-600/20"
+              ><i class="fa-solid fa-receipt text-sm"></i></span
+            >Complete Your Order
+          </h1>
+          <p class="text-md md:text-lg text-gray-500 mt-2">
+            Review your items and complete your purchase
+          </p>
+        </div>
+        <a
+          class="text-green-600 hover:text-green-700 font-medium flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-green-50 transition-all"
+          routerLink="/cart"
+          ><i class="fa-solid fa-arrow-left"></i>Back to Cart</a
+        >
+      </div>
+    </div>
+    <form [formGroup]="shippingAddressForm">
+      <div class="">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+            <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-house"></i>Shipping Address
+              </h2>
+              <p class="text-green-100 text-sm mt-1">Where should we deliver your order?</p>
+            </div>
+            <div class="p-6 space-y-5">
+              <div>
+                <label for="city" class="block text-sm font-semibold text-gray-700 mb-2"
+                  >City:
+                </label>
+                <div class="relative">
+                  <div
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center"
+                  >
+                    <i class="fa-solid fa-city text-gray-500 text-sm"></i>
+                  </div>
+                  <input
+                    id="city"
+                    formControlName="city"
+                    class="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 placeholder:text-sm"
+                    placeholder="e.g. Cairo, Alexandria, Giza"
+                    type="text"
+                    name="city"
+                  />
+                </div>
+              </div>
+
+              @if (cityController?.touched && cityController?.errors) {
+                @if (cityController?.hasError('required')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>City is required.</p>
+                  </div>
+                }
+              }
+
+              <div>
+                <label for="details" class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Street Address:
+                </label>
+                <div class="relative">
+                  <div
+                    class="absolute left-4 top-4 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center"
+                  >
+                    <i class="fa-solid fa-location-dot text-gray-500 text-sm"></i>
+                  </div>
+                  <textarea
+                    id="details"
+                    formControlName="details"
+                    rows="3"
+                    class="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all resize-none border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                    placeholder="Write your address"
+                    name="details"
+                  ></textarea>
+                </div>
+              </div>
+
+              @if (detailsController?.touched && detailsController?.errors) {
+                @if (detailsController?.hasError('required')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>Street Address is required.</p>
+                  </div>
+                }
+              }
+
+              <div>
+                <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Phone Number:
+                </label>
+                <div class="relative">
+                  <div
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center"
+                  >
+                    <i class="fa-solid fa-phone text-gray-500 text-sm"></i>
+                  </div>
+                  <input
+                    id="phone"
+                    formControlName="phone"
+                    class="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                    placeholder="ex. 01283217414"
+                    type="tel"
+                    name="phone"
+                  />
+                </div>
+              </div>
+
+              @if (phoneController?.touched && phoneController?.errors) {
+                @if (phoneController?.hasError('required')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>Phone is required.</p>
+                  </div>
+                }
+                @if (phoneController?.hasError('pattern')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>Enter a valid phone number.</p>
+                  </div>
+                }
+              }
+
+              <div>
+                <label for="postalCode" class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Postal Code:
+                </label>
+                <div class="relative">
+                  <div
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center"
+                  >
+                    <i class="fa-solid fa-location-dot text-gray-500 text-sm"></i>
+                  </div>
+                  <input
+                    id="postalCode"
+                    formControlName="postalCode"
+                    class="w-full px-4 py-3.5 pl-14 border-2 rounded-xl focus:outline-none transition-all border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100"
+                    placeholder="Enter postal code"
+                    type="text"
+                    name="postalCode"
+                  />
+                </div>
+              </div>
+
+              @if (postalCodeController?.touched && postalCodeController?.errors) {
+                @if (postalCodeController?.hasError('required')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>Postal code is required.</p>
+                  </div>
+                }
+                @if (postalCodeController?.hasError('pattern')) {
+                  <div
+                    class="flex items-start sm:items-center p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+                    role="alert"
+                  >
+                    <svg
+                      class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                    <p>Must be 5 digits.</p>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+          <div
+            [class]="shippingAddressForm.valid ? 'hidden' : 'flex'"
+            class="items-center sm:items-center p-4 mb-4 text-sm text-fg-warning rounded-base bg-warning-soft"
+            role="alert"
+          >
+            <svg
+              class="w-4 h-4 me-2 shrink-0 mt-0.5 sm:mt-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <p>
+              <span class="font-medium me-1">Please!</span> Fill in the fields above correctly to
+              continue.
+            </p>
+          </div>
+          <div
+            [class]="shippingAddressForm.valid ? 'block' : 'hidden'"
+            class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm"
+          >
+            <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
+              <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-wallet"></i>Payment Method
+              </h2>
+              <p class="text-green-100 text-sm mt-1">Choose how you'd like to pay</p>
+            </div>
+            <div class="p-6 space-y-4">
+              <button
+                [disabled]="isLoading()"
+                [class]="ifOnline() ? 'flex' : ' hidden'"
+                (click)="payment(1)"
+                type="button"
+                class="w-full p-5 rounded-xl border-2 transition-all items-center gap-4 group hover:border-green-500 bg-gradient-to-r border-gray-200 hover:bg-gray-50"
+              >
+                <div
+                  class="w-10 h-10 rounded-xl flex items-center justify-center transition-all bg-gray-100 text-gray-400 group-hover:bg-green-500 group-hover:text-white"
+                >
+                  <i
+                    [class]="isLoading() ? 'fa-spin fa-spinner' : 'fa-money-bill'"
+                    class="fa-solid text-md"
+                  ></i>
+                </div>
+                <div class="flex-1 text-left">
+                  <h3 class="font-bold text-gray-900 text-sm md:text-lg group-hover:text-green-500">
+                    Cash on Delivery
+                  </h3>
+                  <p
+                    class="text-sm text-gray-500 mt-0.5 hidden md:block group-hover:text-green-500"
+                  >
+                    Pay when your order arrives at your doorstep
+                  </p>
+                </div></button
+              ><button
+                [disabled]="isLoading()"
+                [class]="ifCash() ? 'flex' : ' hidden'"
+                (click)="payment(2)"
+                type="button"
+                class="w-full p-5 rounded-xl border-2 transition-all items-center gap-4 group hover:border-green-500 border-gray-200 hover:bg-gray-50"
+              >
+                <div
+                  class="w-10 h-10 rounded-xl flex items-center justify-center transition-all bg-gray-100 text-gray-400 group-hover:bg-green-500 group-hover:text-white"
+                >
+                  <i
+                    [class]="isLoading() ? 'fa-spin fa-spinner' : 'fa-credit-card'"
+                    class="fa-solid text-xl"
+                  ></i>
+                </div>
+                <div class="flex-1 text-left">
+                  <h3 class="font-bold text-gray-900 text-sm md:text-lg group-hover:text-green-500">
+                    Pay Online
+                  </h3>
+                  <p
+                    class="text-sm text-gray-500 mt-0.5 hidden md:block group-hover:text-green-500"
+                  >
+                    Secure payment with Credit/Debit Card via Stripe
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

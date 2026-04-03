@@ -1,5 +1,5 @@
 import { AuthService } from './../../../core/auth/services/auth.service';
-import { Component, DoCheck, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, DoCheck, OnInit, signal, WritableSignal, Pipe } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ProductCartComponent } from '../../components/product-cart/product-cart.component';
 import { CartsService } from '../../services/carts/carts.service.js';
@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CartComponent implements OnInit {
   carts: WritableSignal<UserCartProducts[]> = signal([]);
   cartsCount: WritableSignal<number> = signal(0);
+  cartId: WritableSignal<string> = signal('');
   totalPrice: WritableSignal<number> = signal(0);
   totalItems: WritableSignal<number> = signal(0);
   constructor(
@@ -26,6 +27,7 @@ export class CartComponent implements OnInit {
     private ngxSpinner: NgxSpinnerService,
     private authService: AuthService,
     private toaster: ToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class CartComponent implements OnInit {
         this.carts.set(res.data.products);
         this.cartsCount.set(res.numOfCartItems);
         this.totalPrice.set(res.data.totalCartPrice);
+        this.cartId.set(res.cartId);
         res.data.products.forEach((product) => {
           this.totalItems.update((p) => p + product.count);
         });
@@ -93,5 +96,9 @@ export class CartComponent implements OnInit {
     event.data.products.forEach((product) => {
       this.totalItems.update((p) => p + product.count);
     });
+  }
+
+  goToCheckout() {
+    this.router.navigate([`/checkout/${this.cartId()}`]);
   }
 }

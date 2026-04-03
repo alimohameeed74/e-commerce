@@ -21,11 +21,17 @@
     <h2 class="text-lg font-bold text-gray-900">
       {{ subcategories().length }} Subcategories in {{ category()?.name }}
     </h2>
-  </div> -->
+  </div>  -->
 
-  <!-- <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+  <div class="mb-6 text-sm text-gray-500">Showing {{ data().length }} products</div>
+
+  <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
     @for (item of data(); track $index) {
-      <app-product-card [product]="item" (changedToFav)="handelChange($event)" [isFav]="wishlistIds().includes(product._id)"></app-product-card>
+      <app-product-card
+        [product]="item"
+        (changedToFav)="handelChange($event)"
+        [isFav]="wishlistIds().includes(item._id)"
+      ></app-product-card>
     } @empty {
       <div
         class="text-center font-normal text-gray-500 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4"
@@ -33,5 +39,5 @@
         No products found.
       </div>
     }
-  </div> -->
+  </div>
 </div>

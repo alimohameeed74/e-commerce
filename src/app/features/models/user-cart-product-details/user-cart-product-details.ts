@@ -13,4 +13,5 @@ export interface UserCartProductDetails {
   brand: Ibrand;
   ratingsAverage: number;
   id: string;
+  ratingsQuantity?: number;
 }

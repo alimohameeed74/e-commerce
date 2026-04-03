@@ -1,3 +1,4 @@
+import { authGuard } from './core/guards/auth-guard.js';
 import { CategoriesComponent } from './features/pages/categories/categories.component';
 import { Routes } from '@angular/router';
 
@@ -19,15 +20,29 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/pages/profile/profile.component').then((p) => p.ProfileComponent),
     children: [
       {
-        path: 'orders',
+        path: 'addresses',
         loadComponent: () =>
-          import('./features/pages/orders/orders.component').then((p) => p.OrdersComponent),
+          import('./features/pages/addresses/addresses.component').then(
+            (p) => p.AddressesComponent,
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/pages/settings/settings.component').then((p) => p.SettingsComponent),
       },
     ],
+  },
+  {
+    path: 'allorders',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/pages/orders/orders.component').then((p) => p.OrdersComponent),
   },
   {
     path: 'products',
@@ -52,6 +67,12 @@ export const routes: Routes = [
       import('./features/pages/subcategory/subcategory.component').then(
         (p) => p.SubcategoryComponent,
       ),
+  },
+  {
+    path: 'checkout/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/pages/checkout/checkout.component').then((p) => p.CheckoutComponent),
   },
   {
     path: 'brands',
