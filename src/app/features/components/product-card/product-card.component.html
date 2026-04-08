@@ -33,10 +33,6 @@
         [class]="isFav() ? 'text-red-500' : 'text-gray-400'"
       >
         <i [class]="isloading() ? 'fa-spin fa-spinner' : ' fa-heart'" class="fa-solid"></i></button
-      ><button
-        class="bg-white h-8 w-8 rounded-full flex items-center justify-center text-gray-600 hover:text-green-600 shadow-sm"
-      >
-        <i class="fa-solid fa-arrows-rotate"></i></button
       ><a
         class="bg-white h-8 w-8 rounded-full flex items-center justify-center text-gray-600 hover:text-green-600 shadow-sm"
         [routerLink]="`/products/${product()._id}`"

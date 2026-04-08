@@ -1,5 +1,4 @@
 import { authGuard } from './core/guards/auth-guard.js';
-import { CategoriesComponent } from './features/pages/categories/categories.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [

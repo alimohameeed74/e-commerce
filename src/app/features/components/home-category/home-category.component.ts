@@ -6,28 +6,48 @@ import { Icategory } from '../../models/category/Icategory.js';
 import { IapiResponse } from '../../models/api-response/Iapi-response.js';
 import { ContentLoaderComponent } from '../../../core/layouts/components/content-loader/content-loader.component';
 import { SharedTitleComponent } from '../../../shared/components/shared-title/shared-title.component';
+import { EmptyItemsComponent } from '../empty-items/empty-items.component';
 
 @Component({
   selector: 'app-home-category',
   templateUrl: './home-category.component.html',
   styleUrls: ['./home-category.component.css'],
-  imports: [CategoryCardComponent, ContentLoaderComponent, SharedTitleComponent],
+  imports: [
+    CategoryCardComponent,
+    ContentLoaderComponent,
+    SharedTitleComponent,
+    EmptyItemsComponent,
+  ],
 })
 export class HomeCategoryComponent implements OnInit {
   categories: WritableSignal<Icategory[]> = signal([]);
+  emptyCategories: WritableSignal<boolean> = signal(false);
+  offline: WritableSignal<boolean> = signal(false);
+  isLoading: WritableSignal<boolean> = signal(false);
   constructor(private categoriesService: CategoriesService) {}
 
   ngOnInit() {
-    this.getLimitedCategories(10);
+    this.getAllCategories();
   }
 
-  getLimitedCategories(limit: number) {
-    this.categoriesService.getLimitedCategories(limit).subscribe({
-      next: (res: IapiResponse<Icategory[]>) => {
-        this.categories.set(res.data);
+  getAllCategories() {
+    this.isLoading.set(true);
+    this.categoriesService.getAllCategories().subscribe({
+      next: (data: Icategory[]) => {
+        this.isLoading.set(false);
+        this.categories.set(data);
       },
       error: (err) => {
-        console.log(err);
+        this.isLoading.set(false);
+        if (
+          err?.status === 404 ||
+          err?.status === 400 ||
+          err?.status === 500 ||
+          !navigator.onLine
+        ) {
+          this.categories.set([]);
+          this.emptyCategories.set(true);
+        }
       },
     });
   }

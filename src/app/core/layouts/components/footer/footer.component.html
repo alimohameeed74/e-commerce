@@ -141,21 +141,24 @@
           <li>
             <a
               class="text-gray-400 hover:text-primary-400 transition-colors text-sm"
-              routerLink="/products?category=6439d58a0049ad0b52b9003f"
+              routerLink="/products-filter"
+              [queryParams]="{ category: '6439d2d167d9aa4ca970649f' }"
               >Electronics</a
             >
           </li>
           <li>
             <a
               class="text-gray-400 hover:text-primary-400 transition-colors text-sm"
-              routerLink="/products?category=6439d2d167d9aa4ca970649f"
+              routerLink="/products-filter"
+              [queryParams]="{ category: '6439d5b90049ad0b52b90048' }"
               >Men's Fashion</a
             >
           </li>
           <li>
             <a
               class="text-gray-400 hover:text-primary-400 transition-colors text-sm"
-              routerLink="/products?category=6439d5b90049ad0b52b90048"
+              routerLink="/products-filter"
+              [queryParams]="{ category: '6439d58a0049ad0b52b9003f' }"
               >Women's Fashion</a
             >
           </li>
@@ -175,7 +178,7 @@
           <li>
             <a
               class="text-gray-400 hover:text-primary-400 transition-colors text-sm"
-              routerLink="/profile/orders"
+              routerLink="/allorders"
               >Order History</a
             >
           </li>

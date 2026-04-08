@@ -19,10 +19,15 @@
     </div>
   </div>
   <div class="container mx-auto px-4 py-10">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5">
+    <div
+      [class.hidden]="offline()"
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5"
+    >
       @for (brand of brands(); track brand._id) {
         <app-brand-card [brand]="brand"></app-brand-card>
       }
     </div>
+    <app-empty-items [class.hidden]="!emptyBrands()" data="Brands"></app-empty-items>
+    <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
   </div>
 </div>

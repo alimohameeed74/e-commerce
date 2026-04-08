@@ -23,10 +23,8 @@
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
     @for (category of categories(); track $index) {
       <app-category-card-details [category]="category"></app-category-card-details>
-    } @empty {
-      <app-content-loader
-        class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 2xl:col-span-5"
-      ></app-content-loader>
     }
   </div>
+  <app-empty-items [class.hidden]="!emptyCategories()" data="Categories"></app-empty-items>
+  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 </div>

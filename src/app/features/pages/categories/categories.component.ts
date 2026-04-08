@@ -1,19 +1,27 @@
-import { IapiResponse } from './../../models/api-response/Iapi-response';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CategoriesService } from './../../services/categories/categories.service';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Icategory } from '../../models/category/Icategory.js';
-import { ContentLoaderComponent } from '../../../core/layouts/components/content-loader/content-loader.component';
 import { CategoryCardDetailsComponent } from '../../components/category-card-details/category-card-details.component';
+import { EmptyItemsComponent } from '../../components/empty-items/empty-items.component';
+import { InternetConnectionComponent } from '../../components/internet-connection/internet-connection.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css'],
-  imports: [ContentLoaderComponent, CategoryCardDetailsComponent],
+  imports: [
+    CategoryCardDetailsComponent,
+    EmptyItemsComponent,
+    InternetConnectionComponent,
+    RouterLink,
+  ],
 })
 export class CategoriesComponent implements OnInit {
   categories: WritableSignal<Icategory[]> = signal([]);
+  emptyCategories: WritableSignal<boolean> = signal(false);
+  offline: WritableSignal<boolean> = signal(false);
   constructor(
     private categoriesService: CategoriesService,
     private ngxSpinnerService: NgxSpinnerService,
@@ -26,14 +34,18 @@ export class CategoriesComponent implements OnInit {
   getAllCategories() {
     this.ngxSpinnerService.show();
     this.categoriesService.getAllCategories().subscribe({
-      next: (res: IapiResponse<Icategory[]>) => {
+      next: (data: Icategory[]) => {
         this.ngxSpinnerService.hide();
-        this.categories.set(res.data);
-        console.log(res.data);
+        this.categories.set(data);
       },
       error: (err) => {
         this.ngxSpinnerService.hide();
-        console.log(err);
+        if (!navigator.onLine) {
+          this.offline.set(true);
+        } else if (err?.status === 404 || err?.status === 400 || err?.status === 500) {
+          this.categories.set([]);
+          this.emptyCategories.set(true);
+        }
       },
     });
   }

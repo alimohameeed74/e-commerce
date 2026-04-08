@@ -251,14 +251,6 @@
                 ></i>
                 Add to Cart
               </button>
-
-              <!-- <button
-                id="buy-now"
-                class="flex-1 bg-gray-900 text-white py-3.5 px-6 rounded-xl font-medium hover:bg-gray-800 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-              >
-                <i class="fa-solid fa-bolt"></i>
-                Buy Now
-              </button> -->
             </div>
             <div class="flex gap-3 mb-6">
               <button
@@ -277,11 +269,7 @@
                 class="flex-1 border-2 py-3 px-4 rounded-xl font-medium transition flex items-center justify-center gap-2 border-gray-200"
               >
                 <i [class]="isloading_() ? 'fa-spinner fa-spin' : 'fa-heart'" class="fa-solid"></i>
-                {{ isFav() ? 'Remove from' : 'Add to' }} Wishlist</button
-              ><button
-                class="border-2 border-gray-200 text-gray-700 py-3 px-4 rounded-xl hover:border-green-300 hover:text-green-600 transition"
-              >
-                <i class="fa-solid fa-share-nodes"></i>
+                {{ isFav() ? 'Remove from' : 'Add to' }} Wishlist
               </button>
             </div>
             <div class="border-t border-gray-100 pt-6">

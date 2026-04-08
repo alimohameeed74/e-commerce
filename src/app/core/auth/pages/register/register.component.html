@@ -3,30 +3,10 @@
     <div class="bg-white border border-gray-300 rounded-2xl shadow-lg px-6 py-10">
       <h2 class="text-center text-gray-500 text-3xl font-semibold mb-2">Create Your Account</h2>
       <p class="text-center text-gray-500">Start your fresh journey with us today</p>
-      <div class="register-options flex gap-2 *:grow my-10">
-        <button
-          type="button"
-          class="py-2 rounded-md bg-transparent border border-gray-400 hover:bg-gray-100 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Sign up with Google"
-        >
-          <i class="fa-brands fa-google me-2 text-red-600"></i><span>Google</span></button
-        ><button
-          type="button"
-          class="py-2 rounded-md bg-transparent border border-gray-400 hover:bg-gray-100 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Sign up with Facebook"
-        >
-          <i class="fa-brands fa-facebook me-2 text-blue-600"></i><span>Facebook</span>
-        </button>
-      </div>
-      <div
-        class="divider relative w-full h-0.5 bg-gray-300/30 my-4 flex items-center before:content-['or'] before:absolute before:top-1/2 before:left-1/2 before:-translate-1/2 before:bg-white before:px-4"
-        aria-hidden="true"
-      >
-        <span class="sr-only">or</span>
-      </div>
+
       <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-7">
         <div class="flex flex-col gap-2">
-          <label for="name">Name*</label
+          <label for="name">Name:</label
           ><input
             id="name"
             class="border valid border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
@@ -91,7 +71,7 @@
         }
 
         <div class="flex flex-col gap-2">
-          <label for="email">Email*</label
+          <label for="email">Email:</label
           ><input
             id="email"
             class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
@@ -157,7 +137,7 @@
         }
 
         <div class="flex flex-col gap-2 relative">
-          <label for="password">Password*</label
+          <label for="password">Password:</label
           ><input
             id="password"
             class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
@@ -235,7 +215,7 @@
         }
 
         <div class="flex flex-col gap-2 relative">
-          <label for="rePassword">Confirm Password*</label
+          <label for="rePassword">Confirm Password:</label
           ><input
             id="rePassword"
             class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
@@ -300,7 +280,7 @@
         }
 
         <div class="flex flex-col gap-2">
-          <label for="phone">Phone Number*</label
+          <label for="phone">Phone Number:</label
           ><input
             id="phone"
             class="border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 placeholder:text-sm"
