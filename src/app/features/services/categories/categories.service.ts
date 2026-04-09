@@ -17,9 +17,9 @@ export class CategoriesService {
       .pipe(map((res) => res.data));
   }
 
-  getSpecificCatgegory(id: string): Observable<IapiResponseSingleData<Icategory>> {
-    return this.httpClient.get<IapiResponseSingleData<Icategory>>(
-      `${environment.apiURL}/categories/${id}`,
-    );
+  getSpecificCatgegory(id: string): Observable<Icategory> {
+    return this.httpClient
+      .get<IapiResponseSingleData<Icategory>>(`${environment.apiURL}/categories/${id}`)
+      .pipe(map((res) => res.data));
   }
 }

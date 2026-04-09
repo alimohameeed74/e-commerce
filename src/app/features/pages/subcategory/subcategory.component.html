@@ -4,38 +4,50 @@
       <a class="hover:text-white transition-colors" href="/">Home</a
       ><span class="text-white/40">/</span
       ><a class="hover:text-white transition-colors" routerLink="/categories">Categories</a
-      ><span class="text-white/40">/</span
-      ><span class="text-white font-medium">{{ category()?.name }}</span>
+      ><span class="text-white/40">/</span>
+      <i [class]="!isLoading() ? 'hidden' : 'fa-solid fa-spinner fa-spin'"></i>
+
+      <span [class.hidden]="isLoading()" class="text-white font-medium">
+        {{ category()?.name }}
+      </span>
+      <span [class.hidden]="!offline_()" class="text-white font-medium"
+        ><i class="fa-regular fa-circle-xmark"></i
+      ></span>
     </nav>
     <div class="flex items-center gap-5">
       <div
         class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-xl ring-1 ring-white/30"
       >
-        <img [alt]="category()?.name" class="w-12 h-12 object-contain" [src]="category()?.image" />
+        <img
+          [alt]="category()?.name"
+          [class.hidden]="isLoading()"
+          class="w-12 h-12 object-contain"
+          [src]="category()?.image"
+        />
+        <i [class]="!isLoading() ? 'hidden' : 'fa-solid fa-spinner fa-spin'"></i>
       </div>
       <div>
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{{ category()?.name }}</h1>
-        <p class="text-white/80 mt-1">Choose a subcategory to browse products</p>
+        <i [class]="!isLoading() ? 'hidden' : 'fa-solid fa-spinner fa-spin'"></i>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight" [class.hidden]="isLoading()">
+          {{ category()?.name }}
+        </h1>
+        <span [class.hidden]="!offline_()" class="text-white font-medium"
+          ><i class="fa-regular fa-circle-xmark"></i
+        ></span>
+
+        <p [class.hidden]="offline_()" class="text-white/80 mt-1">
+          Choose a subcategory to browse products
+        </p>
       </div>
     </div>
   </div>
 </div>
 <div class="container mx-auto px-4 py-10 sm:py-14">
-  <div class="mb-6">
-    <h2 class="text-lg font-bold text-gray-900">
-      {{ subcategories().length }} Subcategories in {{ category()?.name }}
-    </h2>
-  </div>
-
   <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
     @for (subcategory of subcategories(); track $index) {
       <app-subcategory-card [subcategory]="subcategory"></app-subcategory-card>
-    } @empty {
-      <div
-        class="text-center font-normal text-gray-500 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4"
-      >
-        No subcategories found.
-      </div>
     }
   </div>
+  <app-empty-items [class.hidden]="!emptySubcategories()" data="Subcategories"></app-empty-items>
+  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 </div>
