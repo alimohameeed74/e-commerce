@@ -9,20 +9,33 @@ import { WishlistsService } from '../../services/wishlists/wishlists.service.js'
 import { IwishlistResponse } from '../../models/wishlist/Iwishlist-response.js';
 import { IdeleteWishlistResponse } from '../../models/wishlist/Idelete-wishlist-response.js';
 import { AuthService } from '../../../core/auth/services/auth.service.js';
+import { EmptyItemsComponent } from '../empty-items/empty-items.component';
+import { InternetConnectionComponent } from '../internet-connection/internet-connection.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-products',
   templateUrl: './home-products.component.html',
   styleUrls: ['./home-products.component.css'],
-  imports: [ProductCardComponent, SharedTitleComponent, ContentLoaderComponent],
+  imports: [
+    ProductCardComponent,
+    SharedTitleComponent,
+    ContentLoaderComponent,
+    EmptyItemsComponent,
+    InternetConnectionComponent,
+  ],
 })
 export class HomeProductsComponent implements OnInit {
   products: WritableSignal<Iproduct[]> = signal([]);
   wishlistIds: WritableSignal<string[]> = signal([]);
+  emptyProducts: WritableSignal<boolean> = signal(false);
+  offline: WritableSignal<boolean> = signal(false);
+  isLoading: WritableSignal<boolean> = signal(false);
   constructor(
     private productsService: ProductsService,
     private wishlistService: WishlistsService,
     private authService: AuthService,
+    private toasterService: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -30,12 +43,20 @@ export class HomeProductsComponent implements OnInit {
     this.getUserWishlists();
   }
   getAllProducts() {
+    this.isLoading.set(true);
     this.productsService.getAllProducts().subscribe({
-      next: (res: IapiResponse<Iproduct[]>) => {
-        this.products.set(res.data);
+      next: (data: Iproduct[]) => {
+        this.isLoading.set(false);
+        this.products.set(data);
       },
       error: (err) => {
-        console.log(err);
+        this.isLoading.set(false);
+        if (err?.status === 404 || err?.status === 400 || err?.status === 500) {
+          this.products.set([]);
+          this.emptyProducts.set(true);
+        } else if (!navigator.onLine) {
+          this.offline.set(true);
+        }
       },
     });
   }
@@ -51,7 +72,7 @@ export class HomeProductsComponent implements OnInit {
         this.wishlistIds.set(res.data.map((elem) => elem._id));
       },
       error: (err) => {
-        console.log(err);
+        this.toasterService.error(err.message, err.status);
       },
     });
   }

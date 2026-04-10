@@ -83,14 +83,20 @@ export class ProductCardComponent implements OnInit, OnChanges {
     }
     this.isloading_.set(true);
     this.cartsService.addProductToUserCart(id).subscribe({
-      next: (res: IcartApiResponse) => {
+      next: (res: { status: string; message: string }) => {
         this.isloading_.set(false);
         this.toaster.success(res.message, res.status, {
           timeOut: 2000,
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isloading_.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
@@ -111,7 +117,13 @@ export class ProductCardComponent implements OnInit, OnChanges {
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isloading.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
@@ -132,7 +144,13 @@ export class ProductCardComponent implements OnInit, OnChanges {
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isloading.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }

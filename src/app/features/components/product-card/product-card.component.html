@@ -60,22 +60,16 @@
     </div>
     <div class="flex items-center justify-between">
       <div>
-        @if (product().priceAfterDiscount) {
-          <span
-            [class]="product().priceAfterDiscount ? '' : 'hidden'"
-            class="text-md font-bold text-green-500 me-2"
-            >{{ product().priceAfterDiscount | currency: 'EGP' }}</span
-          >
-          <span
-            [class]="product().priceAfterDiscount ? 'line-through' : ''"
-            class="text-sm font-normal text-gray-400"
-            >{{ product().price | currency: 'EGP' }}</span
-          >
-        } @else {
-          <span class="text-md font-bold text-gray-800">{{
-            product().price | currency: 'EGP'
-          }}</span>
-        }
+        <span
+          [class]="product().priceAfterDiscount ? '' : 'hidden'"
+          class="text-md font-bold text-green-500 me-2"
+          >{{ product().priceAfterDiscount | currency: 'EGP' }}</span
+        >
+        <span
+          [class]="product().priceAfterDiscount ? 'line-through' : ''"
+          class="text-sm font-normal text-gray-400"
+          >{{ product().price | currency: 'EGP' }}</span
+        >
       </div>
       <button
         [disabled]="isloading_()"

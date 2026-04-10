@@ -1,5 +1,9 @@
 <div class="container mx-auto px-4 my-8">
-  <app-shared-title [title]="'Products'" [content]="'Featured '"></app-shared-title>
+  <app-shared-title
+    [class.hidden]="isLoading() || offline()"
+    [title]="'Products'"
+    [content]="'Featured '"
+  ></app-shared-title>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
     @for (product of products(); track product._id) {
       <app-product-card
@@ -7,10 +11,9 @@
         [product]="product"
         (changedToFav)="handelChange($event)"
       ></app-product-card>
-    } @empty {
-      <app-content-loader
-        class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 2xl:col-span-5"
-      ></app-content-loader>
     }
   </div>
+  <app-content-loader [class.hidden]="!isLoading()"></app-content-loader>
+  <app-empty-items [class.hidden]="!emptyProducts()" data="Products"></app-empty-items>
+  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 </div>

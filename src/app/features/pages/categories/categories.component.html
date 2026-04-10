@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-br from-green-600 via-green-500 to-green-400 text-white">
+<div class="bg-linear-to-br from-green-600 via-green-500 to-green-400 text-white">
   <div class="container mx-auto px-4 py-10 sm:py-14">
     <nav class="flex items-center gap-2 text-sm text-white/70 mb-6 flex-wrap">
       <a class="hover:text-white transition-colors" routerLink="/">Home</a
@@ -19,12 +19,4 @@
   </div>
 </div>
 
-<div class="container mx-auto px-4 py-10 sm:py-14">
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    @for (category of categories(); track $index) {
-      <app-category-card-details [category]="category"></app-category-card-details>
-    }
-  </div>
-  <app-empty-items [class.hidden]="!emptyCategories()" data="Categories"></app-empty-items>
-  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
-</div>
+<app-home-category></app-home-category>

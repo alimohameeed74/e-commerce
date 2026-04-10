@@ -1,5 +1,9 @@
 <div class="container mx-auto px-4 my-8">
-  <app-shared-title [content]="'Shop By'" [title]="' Category'"></app-shared-title>
+  <app-shared-title
+    [content]="'Shop By'"
+    [class.hidden]="isLoading() || offline()"
+    [title]="' Category'"
+  ></app-shared-title>
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
     @for (category of categories(); track $index) {
       <app-category-card [category]="category"></app-category-card>
@@ -7,4 +11,5 @@
   </div>
   <app-content-loader [class.hidden]="!isLoading()"></app-content-loader>
   <app-empty-items [class.hidden]="!emptyCategories()" data="Categories"></app-empty-items>
+  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 </div>

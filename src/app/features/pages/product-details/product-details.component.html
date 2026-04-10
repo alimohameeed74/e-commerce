@@ -161,32 +161,28 @@
                 </div>
               </div>
               <span class="text-sm text-gray-600"
-                >{{ product()?.ratingsAverage }} ({{ product()?.reviews?.length }} reviews)</span
+                >{{ product()?.ratingsAverage }} ({{ product()?.ratingsQuantity }})</span
               >
             </div>
             <div class="flex items-center flex-wrap gap-3 mb-6">
-              @if (product()?.priceAfterDiscount) {
-                <span
-                  [class]="product()?.priceAfterDiscount ? '' : 'hidden'"
-                  class="text-md font-bold text-gray-800 me-2"
-                  >{{ product()?.priceAfterDiscount | currency: 'EGP' }}</span
-                >
-                <span
-                  [class]="product()?.priceAfterDiscount ? 'line-through' : ''"
-                  class="text-sm font-normal text-gray-400"
-                  >{{ product()?.price | currency: 'EGP' }}</span
-                >
-                <span class="text-sm font-normal text-white p-2 rounded-xl bg-red-500"
-                  >Save
-                  {{
-                    (product()!.price | productDiscount: product()?.priceAfterDiscount).slice(1)
-                  }}</span
-                >
-              } @else {
-                <span class="text-md font-bold text-gray-800">{{
-                  product()?.price | currency: 'EGP'
-                }}</span>
-              }
+              <span
+                [class]="product()?.priceAfterDiscount ? '' : 'hidden'"
+                class="text-md font-bold text-gray-800 me-2"
+                >{{ product()?.priceAfterDiscount | currency: 'EGP' }}</span
+              >
+              <span
+                [class]="product()?.priceAfterDiscount ? 'line-through' : ''"
+                class="text-sm font-normal text-gray-400"
+                >{{ product()?.price | currency: 'EGP' }}</span
+              >
+              <span
+                [class]="product()?.priceAfterDiscount ? '' : 'hidden'"
+                class="text-sm font-normal text-white p-2 rounded-xl bg-red-500"
+                >Save
+                {{
+                  (product()!.price | productDiscount: product()?.priceAfterDiscount).slice(1)
+                }}</span
+              >
             </div>
             <div class="flex items-center gap-2 mb-6">
               <span
@@ -202,27 +198,6 @@
             <div class="mb-6">
               <label class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
               <div class="flex flex-col sm:flex-row items-center gap-4">
-                <div class="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
-                  <button
-                    id="decrease-qty"
-                    class="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition disabled:opacity-50"
-                    disabled=""
-                  >
-                    <i class="fa-solid fa-minus"></i></button
-                  ><input
-                    min="1"
-                    max="220"
-                    class="w-16 text-center border-0 focus:ring-0 focus:outline-none text-lg font-medium"
-                    id="quantity"
-                    type="number"
-                    value="1"
-                  /><button
-                    id="increase-qty"
-                    class="px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition disabled:opacity-50"
-                  >
-                    <i class="fa-solid fa-plus"></i>
-                  </button>
-                </div>
                 <span class="text-sm text-gray-500">{{ product()?.quantity }} available</span>
               </div>
             </div>
@@ -383,5 +358,8 @@
     </div>
   </div>
 }
+
+<app-empty-items [class.hidden]="!emptyProduct()" data="Product"></app-empty-items>
+<app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 
 <!-- <app-home-products></app-home-products> -->

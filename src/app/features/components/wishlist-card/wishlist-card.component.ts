@@ -47,7 +47,7 @@ export class WishlistCardComponent implements OnInit {
     }
     this.isLoading_.set(true);
     this.cartsService.addProductToUserCart(id).subscribe({
-      next: (res: IcartApiResponse) => {
+      next: (res: { status: string; message: string }) => {
         this.isLoading_.set(false);
         this.toaster.success(res.message, res.status, {
           timeOut: 2000,

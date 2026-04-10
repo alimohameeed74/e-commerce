@@ -17,6 +17,8 @@ import { CartsService } from '../../services/carts/carts.service.js';
 import { WishlistsService } from '../../services/wishlists/wishlists.service.js';
 import { IdeleteWishlistResponse } from '../../models/wishlist/Idelete-wishlist-response.js';
 import { IwishlistResponse } from '../../models/wishlist/Iwishlist-response.js';
+import { InternetConnectionComponent } from '../../components/internet-connection/internet-connection.component';
+import { EmptyItemsComponent } from '../../components/empty-items/empty-items.component';
 
 @Component({
   selector: 'app-product-details',
@@ -29,6 +31,8 @@ import { IwishlistResponse } from '../../models/wishlist/Iwishlist-response.js';
     ProductDetailsTabComponent,
     ProductReturnsTabComponent,
     ProductReviewsTabComponent,
+    InternetConnectionComponent,
+    EmptyItemsComponent,
   ],
 })
 export class ProductDetailsComponent implements OnInit {
@@ -43,6 +47,9 @@ export class ProductDetailsComponent implements OnInit {
   isloading_: WritableSignal<boolean> = signal(false);
   wishlistIds: WritableSignal<string[]> = signal([]);
   isFav: WritableSignal<boolean> = signal(false);
+  offline: WritableSignal<boolean> = signal(false);
+  emptyProduct: WritableSignal<boolean> = signal(false);
+
   constructor(
     private productsService: ProductsService,
     private nxSpinnerService: NgxSpinnerService,
@@ -66,9 +73,9 @@ export class ProductDetailsComponent implements OnInit {
   getProductDetails(id: string) {
     this.nxSpinnerService.show();
     this.productsService.getSpecificProduct(id).subscribe({
-      next: (res: IapiResponseSingleData<Iproduct>) => {
+      next: (data: Iproduct) => {
         this.nxSpinnerService.hide();
-        this.product.set(res.data);
+        this.product.set(data);
         this.productAvgRate.set(Math.floor(this.product()!.ratingsAverage));
         if (this.productAvgRate() === Math.round(this.product()!.ratingsAverage)) {
           this.isAvgRateFloat.set(false);
@@ -79,7 +86,12 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         this.nxSpinnerService.hide();
-        console.log(err);
+        if (!navigator.onLine) {
+          this.offline.set(true);
+        } else {
+          this.product.set(null);
+          this.emptyProduct.set(true);
+        }
       },
     });
   }
@@ -126,14 +138,20 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.isloading.set(true);
     this.cartsService.addProductToUserCart(id).subscribe({
-      next: (res: IcartApiResponse) => {
+      next: (res: { status: string; message: string }) => {
         this.isloading.set(false);
         this.toaster.success(res.message, res.status, {
           timeOut: 2000,
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isloading.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
@@ -156,7 +174,13 @@ export class ProductDetailsComponent implements OnInit {
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isloading_.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
@@ -169,7 +193,7 @@ export class ProductDetailsComponent implements OnInit {
         this.isFav.set(this.wishlistIds().includes(id));
       },
       error: (err) => {
-        console.log(err);
+        this.toaster.error(err.message, err.status);
       },
     });
   }
@@ -187,7 +211,12 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         this.isloading_.set(false);
-        console.log(err);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }

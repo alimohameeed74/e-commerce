@@ -7,6 +7,7 @@ import { IapiResponse } from '../../models/api-response/Iapi-response.js';
 import { ContentLoaderComponent } from '../../../core/layouts/components/content-loader/content-loader.component';
 import { SharedTitleComponent } from '../../../shared/components/shared-title/shared-title.component';
 import { EmptyItemsComponent } from '../empty-items/empty-items.component';
+import { InternetConnectionComponent } from '../internet-connection/internet-connection.component';
 
 @Component({
   selector: 'app-home-category',
@@ -17,6 +18,7 @@ import { EmptyItemsComponent } from '../empty-items/empty-items.component';
     ContentLoaderComponent,
     SharedTitleComponent,
     EmptyItemsComponent,
+    InternetConnectionComponent,
   ],
 })
 export class HomeCategoryComponent implements OnInit {
@@ -39,14 +41,11 @@ export class HomeCategoryComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading.set(false);
-        if (
-          err?.status === 404 ||
-          err?.status === 400 ||
-          err?.status === 500 ||
-          !navigator.onLine
-        ) {
+        if (err?.status === 404 || err?.status === 400 || err?.status === 500) {
           this.categories.set([]);
           this.emptyCategories.set(true);
+        } else if (!navigator.onLine) {
+          this.offline.set(true);
         }
       },
     });
