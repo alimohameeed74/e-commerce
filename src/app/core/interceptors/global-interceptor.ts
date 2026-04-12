@@ -2,7 +2,12 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 
 export const globalInterceptor: HttpInterceptorFn = (req, next) => {
-  if (req.url.includes('cart') || req.url.includes('wishlist') || req.url.includes('orders')) {
+  if (
+    req.url.includes('cart') ||
+    req.url.includes('wishlist') ||
+    req.url.includes('orders') ||
+    req.url.includes('verifyToken')
+  ) {
     req = req.clone({
       setHeaders: {
         token: `${localStorage.getItem('token')}`,

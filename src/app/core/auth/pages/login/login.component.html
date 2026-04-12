@@ -4,12 +4,14 @@
       <div class="bg-white rounded-2xl border border-gray-300 shadow-xl p-8 lg:p-12">
         <div class="text-center mb-8">
           <div class="flex items-center justify-center mb-4">
-            <span class="text-3xl font-bold text-green-600"
+            <span class="sm:text-3xl text-2xl font-bold text-green-600"
               >Fresh<span class="text-gray-800">Cart</span></span
             >
           </div>
-          <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
-          <p class="text-gray-600">Sign in to continue your fresh shopping experience</p>
+          <h1 class="sm:text-3xl text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
+          <p class="text-gray-600 sm:text-lg text-sm">
+            Sign in to continue your fresh shopping experience
+          </p>
         </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-7">
@@ -127,21 +129,26 @@
             @if (passwordController?.hasError('pattern')) {
               <p [class.text-success]="hasLowerCase()" [class.text-danger]="!hasLowerCase()">
                 <i [class]="hasLowerCase() ? 'fa-check' : 'fa-xmark'" class="fa-solid"></i> One
-                lowercase letter
+                lowercase letter.
               </p>
 
               <p [class.text-success]="hasUpperCase()" [class.text-danger]="!hasUpperCase()">
                 <i class="fa-solid" [class]="hasUpperCase() ? 'fa-check' : 'fa-xmark'"></i> One
-                uppercase letter
+                uppercase letter.
               </p>
 
               <p [class.text-success]="hasNumber()" [class.text-danger]="!hasNumber()">
-                <i class="fa-solid" [class]="hasNumber() ? 'fa-check' : 'fa-xmark'"></i> One number
+                <i class="fa-solid" [class]="hasNumber() ? 'fa-check' : 'fa-xmark'"></i> One number.
               </p>
 
               <p [class.text-success]="hasSpecialChar()" [class.text-danger]="!hasSpecialChar()">
                 <i class="fa-solid" [class]="hasSpecialChar() ? 'fa-check' : 'fa-xmark'"></i> One
-                special character
+                special character.
+              </p>
+              <p [class.text-success]="!hasSpaces()" [class.text-danger]="hasSpaces()">
+                <i class="fa-solid" [class]="!hasSpaces() ? 'fa-check' : 'fa-xmark'"></i>
+                {{ hasSpaces() ? 'With' : 'Without' }}
+                spaces.
               </p>
 
               <p
@@ -152,19 +159,23 @@
                   class="fa-solid"
                   [class]="passwordController?.value?.length >= 8 ? 'fa-check' : 'fa-xmark'"
                 ></i>
-                At least 8 characters
+                At least 8 characters.
               </p>
             }
           }
 
           <button
             type="submit"
-            [disabled]="loginForm.invalid"
+            [disabled]="loginForm.invalid || isLoading()"
             class="py-3 rounded-md bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed w-full transition-colors"
             aria-busy="false"
           >
-            <i class="fa-solid fa-user-plus me-2"> </i>
-            <span>Sign In</span>
+            <i
+              [class]="isLoading() ? 'fa-solid fa-spin fa-spinner' : 'fa-solid fa-user-plus'"
+              class="me-2"
+            >
+            </i>
+            <span>Sign{{ isLoading() ? 'ing' : '' }} In</span>
           </button>
           <div
             [class]="loginForm.valid ? 'hidden' : 'flex'"
@@ -193,14 +204,14 @@
         </form>
         <div class="text-center mt-8 pt-6 border-t border-gray-100">
           <p class="text-gray-600">
-            New to FreshCart?<a
+            <a
               class="text-green-600 hover:text-green-700 ms-2 font-semibold cursor-pointer"
               routerLink="/register"
               >Create an account</a
             >
           </p>
           <p class="text-gray-600">
-            Reset Your Password?<a
+            <a
               class="text-green-600 hover:text-green-700 ms-2 font-semibold cursor-pointer"
               routerLink="/forget-password"
               >Forgot Password</a

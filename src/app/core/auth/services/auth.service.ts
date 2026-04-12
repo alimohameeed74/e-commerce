@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Iregister } from '../models/register/Iregister.js';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { IapiAuthResponse } from '../models/api-auth-response/Iapi-auth-response.js';
 import { environment } from '../../../../environments/environment.development.js';
 import { Ilogin } from '../models/login/Ilogin.js';
 import { Iuser } from '../models/user/Iuser.js';
 import { IforgetPassword } from '../models/forget-password-response/Iforget-password.js';
 import { IforgetPasswordForm } from '../models/forget-password-form/Iforget-password-form.js';
+import { IverifyTokenResponse } from '../models/verify-token-response/Iverify-token-response.js';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,9 @@ export class AuthService {
     if (token && userData) {
       this.isLoggedIn.set(true);
       this.userData.set(JSON.parse(userData));
-      console.log('form app yes');
     }
   }
+
   get getIsLoggedIn_() {
     return this.isLoggedIn();
   }
@@ -64,5 +65,8 @@ export class AuthService {
   }
   resetPassword(data: IforgetPasswordForm): Observable<IforgetPassword> {
     return this.httpClient.put<IforgetPassword>(`${environment.apiURL}/auth/resetPassword`, data);
+  }
+  verifyToken(): Observable<IverifyTokenResponse> {
+    return this.httpClient.get<IverifyTokenResponse>(`${environment.apiURL}/auth/verifyToken`);
   }
 }

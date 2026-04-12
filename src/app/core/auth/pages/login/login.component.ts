@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service.js';
 import { ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { IapiAuthResponse } from '../../models/api-auth-response/Iapi-auth-response.js';
 
 @Component({
@@ -16,11 +15,12 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showPassword: WritableSignal<boolean> = signal(false);
   showRePassword: WritableSignal<boolean> = signal(false);
+  isLoading: WritableSignal<boolean> = signal(false);
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private toasterService: ToastrService,
-    private ngxSpinner: NgxSpinnerService,
+
     private router: Router,
   ) {
     this.loginForm = this.fb.group({
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$#!%*?&]{8,}$/),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])\S{8,}$/),
         ],
       ],
     });
@@ -59,27 +59,39 @@ export class LoginComponent implements OnInit {
   }
 
   hasSpecialChar() {
-    return /[@$!%*?&]/.test(this.passwordController?.value);
+    return /[^A-Za-z\d\s]/.test(this.passwordController?.value);
+  }
+
+  hasSpaces() {
+    return /\s/.test(this.passwordController?.value);
   }
 
   login() {
     if (this.loginForm.valid) {
-      this.ngxSpinner.show();
+      this.isLoading.set(true);
       this.authService.login(this.loginForm.value).subscribe({
         next: (res: IapiAuthResponse) => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('userData', JSON.stringify(res.user));
           this.authService.userLogin();
           this.authService.holdUserData(res.user);
-          this.ngxSpinner.hide();
+          this.isLoading.set(false);
           this.toasterService.success(res.message, 'signed in!', {
             timeOut: 3000,
           });
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          this.ngxSpinner.hide();
-          this.toasterService.error(err?.error?.statusMsg, err?.error?.message);
+          this.isLoading.set(false);
+          if (err?.status === 401) {
+            this.toasterService.error(err?.statusMsg, err?.message);
+          } else if (!navigator.onLine) {
+            this.toasterService.error('fail', 'No internet', {
+              timeOut: 3000,
+            });
+          } else {
+            this.toasterService.error(err?.statusMsg, err?.message);
+          }
         },
       });
     }

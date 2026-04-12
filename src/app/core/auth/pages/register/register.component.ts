@@ -9,8 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service.js';
 import { IapiAuthResponse } from '../../models/api-auth-response/Iapi-auth-response.js';
-import { Toast, ToastrService } from 'ngx-toastr';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -22,11 +21,12 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   showPassword: WritableSignal<boolean> = signal(false);
   showRePassword: WritableSignal<boolean> = signal(false);
+  isLoading: WritableSignal<boolean> = signal(false);
+  offline: WritableSignal<boolean> = signal(false);
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private toasterService: ToastrService,
-    private ngxSpinner: NgxSpinnerService,
     private router: Router,
   ) {
     this.registerForm = this.fb.group(
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
           '',
           [
             Validators.required,
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])\S{8,}$/),
           ],
         ],
         rePassword: ['', Validators.required],
@@ -82,30 +82,40 @@ export class RegisterComponent implements OnInit {
   }
 
   hasSpecialChar() {
-    return /[@$!%*?&]/.test(this.passwordController?.value);
+    return /[^A-Za-z\d\s]/.test(this.passwordController?.value);
+  }
+
+  hasSpaces() {
+    return /\s/.test(this.passwordController?.value);
   }
 
   register() {
     if (this.registerForm.valid) {
-      this.ngxSpinner.show();
+      this.isLoading.set(true);
       this.authService.register(this.registerForm.value).subscribe({
         next: (res: IapiAuthResponse) => {
           localStorage.setItem('token', res.token);
           localStorage.setItem('userData', JSON.stringify(res.user));
           this.authService.userLogin();
           this.authService.holdUserData(res.user);
-          this.ngxSpinner.hide();
+          this.isLoading.set(false);
           this.toasterService.success(res.message, 'account created!', {
             timeOut: 3000,
           });
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          this.ngxSpinner.hide();
-          this.toasterService.error(err?.error?.statusMsg, err?.error?.message);
-          console.log(err);
+          this.isLoading.set(false);
+
           if (err?.status === 409) {
+            this.toasterService.error(err?.statusMsg, err?.message);
             this.router.navigate(['/login']);
+          } else if (!navigator.onLine) {
+            this.toasterService.error('fail', 'No internet', {
+              timeOut: 3000,
+            });
+          } else {
+            this.toasterService.error(err?.statusMsg, err?.message);
           }
         },
       });
