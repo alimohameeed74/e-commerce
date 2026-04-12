@@ -3,139 +3,14 @@
     <div class="container mx-auto px-4">
       <div class="flex flex-col lg:flex-row gap-8">
         <div id="product-images" class="lg:w-1/4">
-          <div class="bg-white rounded-xl shadow-sm p-4 sticky top-4">
-            <div class="image-gallery product-gallery image-gallery-using-mouse" aria-live="polite">
-              <div class="image-gallery-content image-gallery-thumbnails-bottom">
-                <div class="image-gallery-slide-wrapper image-gallery-thumbnails-bottom">
-                  <div class="image-gallery-swipe">
-                    <div class="image-gallery-slides">
-                      <div
-                        aria-label="Go to Slide 1"
-                        tabindex="-1"
-                        class="image-gallery-slide image-gallery-center"
-                        role="button"
-                        style="
-                          display: inherit;
-                          transform: translate3d(0%, 0px, 0px);
-                          transition: 450ms ease-out;
-                        "
-                      >
-                        <img class="image-gallery-image" [src]="product()?.imageCover" />
-                      </div>
-                      <!-- <div
-                      aria-label="Go to Slide 2"
-                      tabindex="-1"
-                      class="image-gallery-slide image-gallery-right"
-                      role="button"
-                      style="
-                        display: inherit;
-                        transform: translate3d(100%, 0px, 0px);
-                        transition: 450ms ease-out;
-                      "
-                    >
-                      <img
-                        class="image-gallery-image"
-                        src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156555-2.jpeg"
-                      />
-                    </div>
-                    <div
-                      aria-label="Go to Slide 3"
-                      tabindex="-1"
-                      class="image-gallery-slide"
-                      role="button"
-                      style="
-                        display: inherit;
-                        transform: translate3d(200%, 0px, 0px);
-                        transition: 450ms ease-out;
-                      "
-                    >
-                      <img
-                        class="image-gallery-image"
-                        src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156554-1.jpeg"
-                      />
-                    </div>
-                    <div
-                      aria-label="Go to Slide 4"
-                      tabindex="-1"
-                      class="image-gallery-slide image-gallery-left"
-                      role="button"
-                      style="
-                        display: inherit;
-                        transform: translate3d(-100%, 0px, 0px);
-                        transition: 450ms ease-out;
-                      "
-                    >
-                      <img
-                        class="image-gallery-image"
-                        src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156556-4.jpeg"
-                      />
-                    </div>  -->
-                    </div>
-                  </div>
-                </div>
-                <!-- <div
-                class="image-gallery-thumbnails-wrapper image-gallery-thumbnails-bottom thumbnails-swipe-horizontal"
-              >
-                <div class="image-gallery-thumbnails">
-                  <nav
-                    class="image-gallery-thumbnails-container"
-                    aria-label="Thumbnail Navigation"
-                    style="transform: translate3d(0px, 0px, 0px); transition: 450ms ease-out"
-                  >
-                    <button
-                      type="button"
-                      tabindex="0"
-                      aria-pressed="true"
-                      aria-label="Go to Slide 1"
-                      class="image-gallery-thumbnail active"
-                    >
-                      <span class="image-gallery-thumbnail-inner"
-                        ><img
-                          class="image-gallery-thumbnail-image"
-                          src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156555-3.jpeg"
-                      /></span></button
-                    ><button
-                      type="button"
-                      tabindex="0"
-                      aria-pressed="false"
-                      aria-label="Go to Slide 2"
-                      class="image-gallery-thumbnail"
-                    >
-                      <span class="image-gallery-thumbnail-inner"
-                        ><img
-                          class="image-gallery-thumbnail-image"
-                          src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156555-2.jpeg"
-                      /></span></button
-                    ><button
-                      type="button"
-                      tabindex="0"
-                      aria-pressed="false"
-                      aria-label="Go to Slide 3"
-                      class="image-gallery-thumbnail"
-                    >
-                      <span class="image-gallery-thumbnail-inner"
-                        ><img
-                          class="image-gallery-thumbnail-image"
-                          src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156554-1.jpeg"
-                      /></span></button
-                    ><button
-                      type="button"
-                      tabindex="0"
-                      aria-pressed="false"
-                      aria-label="Go to Slide 4"
-                      class="image-gallery-thumbnail"
-                    >
-                      <span class="image-gallery-thumbnail-inner"
-                        ><img
-                          class="image-gallery-thumbnail-image"
-                          src="https://ecommerce.routemisr.com/Route-Academy-products/1680403156556-4.jpeg"
-                      /></span>
-                    </button>
-                  </nav>
-                </div>
-              </div> -->
+          <div
+            class="bg-white rounded-xl shadow-lg border border-gray-200 scrollbar-hide p-4 sticky top-18 flex flex-col gap-4 h-120 overflow-y-auto"
+          >
+            @for (image of product()?.images; track $index) {
+              <div class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
+                <img class="image-gallery-image" [src]="image" />
               </div>
-            </div>
+            }
           </div>
         </div>
         <div id="product-info" class="lg:w-3/4">
@@ -293,38 +168,38 @@
   <div class="container mx-auto px-4">
     <div class="w-full bg-neutral-green border border-default rounded-base shadow-xs">
       <ul
-        class="flex flex-wrap text-sm font-medium text-center text-body bg-neutral-secondary-soft border-b border-default rounded-t-base"
+        class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm font-medium text-center text-body bg-neutral-secondary-soft border-b border-default rounded-t-base"
       >
-        <li class="me-2">
+        <li>
           <button
             (click)="showProductDetailsTab()"
             [class]="
               productDetailsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
             "
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
+            class="flex mx-auto items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-box text-sm"></i>
             Product Details
           </button>
         </li>
-        <li class="me-2">
+        <li>
           <button
             (click)="showProductReviewsTab()"
             [class]="
               productReviewsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
             "
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
+            class="flex mx-auto items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-star text-sm"></i>Reviews ({{ product()?.reviews?.length }})
           </button>
         </li>
-        <li class="me-2">
+        <li>
           <button
             (click)="showProductReturnsTab()"
             [class]="
               productReturnsTab() ? 'text-green-600 border-b-2 border-green-600 bg-green-50/50' : ''
             "
-            class="flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
+            class="flex mx-auto items-center gap-2 px-6 py-4 font-medium whitespace-nowrap text-gray-600 hover:text-green-600 hover:bg-gray-50"
           >
             <i class="fa-solid fa-truck text-sm"></i>
             Shipping &amp; Returns
@@ -362,4 +237,7 @@
 <app-empty-items [class.hidden]="!emptyProduct()" data="Product"></app-empty-items>
 <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 
-<!-- <app-home-products></app-home-products> -->
+<app-products-may-like
+  [class.hidden]="offline() || likesisloading()"
+  [catId]="catId()"
+></app-products-may-like>

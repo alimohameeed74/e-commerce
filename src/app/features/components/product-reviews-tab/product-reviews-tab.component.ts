@@ -32,7 +32,6 @@ export class ProductReviewsTabComponent implements OnInit, OnChanges {
     for (let i of [1, 2, 3, 4, 5]) {
       this.getPercentages(i);
     }
-    console.log(this.reviewsObj());
   }
 
   getPercentages(rate: number) {

@@ -19,6 +19,7 @@ import { IdeleteWishlistResponse } from '../../models/wishlist/Idelete-wishlist-
 import { IwishlistResponse } from '../../models/wishlist/Iwishlist-response.js';
 import { InternetConnectionComponent } from '../../components/internet-connection/internet-connection.component';
 import { EmptyItemsComponent } from '../../components/empty-items/empty-items.component';
+import { ProductsMayLikeComponent } from '../../components/products-may-like/products-may-like.component';
 
 @Component({
   selector: 'app-product-details',
@@ -33,6 +34,7 @@ import { EmptyItemsComponent } from '../../components/empty-items/empty-items.co
     ProductReviewsTabComponent,
     InternetConnectionComponent,
     EmptyItemsComponent,
+    ProductsMayLikeComponent,
   ],
 })
 export class ProductDetailsComponent implements OnInit {
@@ -49,6 +51,8 @@ export class ProductDetailsComponent implements OnInit {
   isFav: WritableSignal<boolean> = signal(false);
   offline: WritableSignal<boolean> = signal(false);
   emptyProduct: WritableSignal<boolean> = signal(false);
+  catId: WritableSignal<string> = signal('');
+  likesisloading: WritableSignal<boolean> = signal(false);
 
   constructor(
     private productsService: ProductsService,
@@ -72,10 +76,13 @@ export class ProductDetailsComponent implements OnInit {
   }
   getProductDetails(id: string) {
     this.nxSpinnerService.show();
+    this.likesisloading.set(true);
     this.productsService.getSpecificProduct(id).subscribe({
       next: (data: Iproduct) => {
         this.nxSpinnerService.hide();
+        this.likesisloading.set(false);
         this.product.set(data);
+        this.catId.set(this.product()!.category._id);
         this.productAvgRate.set(Math.floor(this.product()!.ratingsAverage));
         if (this.productAvgRate() === Math.round(this.product()!.ratingsAverage)) {
           this.isAvgRateFloat.set(false);
@@ -86,6 +93,8 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         this.nxSpinnerService.hide();
+        this.likesisloading.set(false);
+
         if (!navigator.onLine) {
           this.offline.set(true);
         } else {
