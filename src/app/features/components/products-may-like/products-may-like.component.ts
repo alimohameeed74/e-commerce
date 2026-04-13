@@ -34,6 +34,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class ProductsMayLikeComponent implements OnInit, OnChanges {
   catId: InputSignal<string> = input.required();
+  productId: InputSignal<string> = input.required();
   products: WritableSignal<Iproduct[]> = signal([]);
   wishlistIds: WritableSignal<string[]> = signal([]);
   emptyProducts: WritableSignal<boolean> = signal(false);
@@ -59,7 +60,7 @@ export class ProductsMayLikeComponent implements OnInit, OnChanges {
     this.productsService.getProductsBy('category', catId).subscribe({
       next: (data: Iproduct[]) => {
         this.isLoading.set(false);
-        this.products.set(data);
+        this.products.set(data.filter((product) => product._id !== this.productId()));
         if (data.length === 0) {
           this.emptyProducts.set(true);
         }

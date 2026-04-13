@@ -52,6 +52,7 @@ export class ProductDetailsComponent implements OnInit {
   offline: WritableSignal<boolean> = signal(false);
   emptyProduct: WritableSignal<boolean> = signal(false);
   catId: WritableSignal<string> = signal('');
+  productId: WritableSignal<string> = signal('');
   likesisloading: WritableSignal<boolean> = signal(false);
 
   constructor(
@@ -83,6 +84,7 @@ export class ProductDetailsComponent implements OnInit {
         this.likesisloading.set(false);
         this.product.set(data);
         this.catId.set(this.product()!.category._id);
+        this.productId.set(this.product()!._id);
         this.productAvgRate.set(Math.floor(this.product()!.ratingsAverage));
         if (this.productAvgRate() === Math.round(this.product()!.ratingsAverage)) {
           this.isAvgRateFloat.set(false);

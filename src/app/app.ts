@@ -8,6 +8,7 @@ import { AuthService } from './core/auth/services/auth.service.js';
 import { IverifyTokenResponse } from './core/auth/models/verify-token-response/Iverify-token-response.js';
 import { InternetConnectionComponent } from './features/components/internet-connection/internet-connection.component';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from './core/services/spinner/spinner.service.js';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class App {
     private authService: AuthService,
     private ngxSpinner: NgxSpinnerService,
     private toasterService: ToastrService,
+    public spinnerService: SpinnerService,
   ) {}
   ngOnInit(): void {
     initFlowbite();
@@ -38,18 +40,18 @@ export class App {
   }
 
   verifyToken() {
-    this.toasterService.warning('Verifying your session...', 'Waiting', {
-      timeOut: 2000,
-    });
     this.isLoading.set(true);
+    this.spinnerService.setSpinnerText('Verifying session...');
     this.ngxSpinner.show();
     this.authService.verifyToken().subscribe({
       next: (res: IverifyTokenResponse) => {
         this.isLoading.set(false);
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
       },
       error: (err) => {
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
         if (err?.status === 401) {
           this.authService.userLogout();
           localStorage.clear();

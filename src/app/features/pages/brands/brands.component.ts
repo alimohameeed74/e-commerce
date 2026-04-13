@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BrandCardComponent } from '../../components/brand-card/brand-card.component';
 import { EmptyItemsComponent } from '../../components/empty-items/empty-items.component';
 import { InternetConnectionComponent } from '../../components/internet-connection/internet-connection.component';
+import { SpinnerService } from '../../../core/services/spinner/spinner.service.js';
 
 @Component({
   selector: 'app-brands',
@@ -20,6 +21,7 @@ export class BrandsComponent implements OnInit {
   constructor(
     private brandsService: BrandsService,
     private ngxSpinner: NgxSpinnerService,
+    private spinnerService: SpinnerService,
   ) {}
 
   ngOnInit() {
@@ -30,10 +32,12 @@ export class BrandsComponent implements OnInit {
     this.brandsService.getAllBrands().subscribe({
       next: (data: Ibrand[]) => {
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
         this.brands.set(data);
       },
       error: (err) => {
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
         if (!navigator.onLine) {
           this.offline.set(true);
         } else if (err?.status === 404 || err?.status === 400 || err?.status === 500) {

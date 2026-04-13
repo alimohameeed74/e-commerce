@@ -51,6 +51,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.clearForm();
+    if (this.authService.getIsLoggedIn_) {
+      this.toasterService.success('Already signed in', 'Success');
+      this.router.navigate(['/']);
+    }
   }
 
   get nameController() {

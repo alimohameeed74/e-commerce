@@ -12,6 +12,7 @@ import { IdeleteWishlistResponse } from '../../../features/models/wishlist/Idele
 import { EmptyItemsComponent } from '../../../features/components/empty-items/empty-items.component';
 import { InternetConnectionComponent } from '../../../features/components/internet-connection/internet-connection.component';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from '../../../core/services/spinner/spinner.service.js';
 
 @Component({
   selector: 'app-shared-data-filter',
@@ -33,6 +34,7 @@ export class SharedDataFilterComponent implements OnInit {
     private authAervice: AuthService,
     private wishlistService: WishlistsService,
     private toasterService: ToastrService,
+    private spinnerService: SpinnerService,
   ) {}
 
   ngOnInit() {
@@ -60,6 +62,7 @@ export class SharedDataFilterComponent implements OnInit {
     this.producsSevice.getProductsBy(searchItem, id).subscribe({
       next: (data: Iproduct[]) => {
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
         this.isLoading.set(false);
         this.offline.set(false);
         this.data.set(data);
@@ -70,6 +73,7 @@ export class SharedDataFilterComponent implements OnInit {
 
       error: (err) => {
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
         this.isLoading.set(false);
         if (!navigator.onLine) {
           this.offline.set(true);

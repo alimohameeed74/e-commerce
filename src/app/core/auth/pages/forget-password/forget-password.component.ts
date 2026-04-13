@@ -6,11 +6,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { validate } from '@angular/forms/signals';
+
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service.js';
 import { IforgetPassword } from '../../models/forget-password-response/Iforget-password.js';
+import { email } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-forget-password',
@@ -22,6 +23,8 @@ export class ForgetPasswordComponent implements OnInit {
   counter: WritableSignal<number> = signal(1);
   showPass: WritableSignal<boolean> = signal(false);
   isLoading: WritableSignal<boolean> = signal(false);
+  isLoading_: WritableSignal<boolean> = signal(false);
+  isLoading__: WritableSignal<boolean> = signal(false);
   forgetPasswordForm: FormGroup;
   verifyCodeForm: FormGroup;
   resetPasswordForm: FormGroup;
@@ -50,13 +53,18 @@ export class ForgetPasswordComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$#!%*?&]{8,}$/),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])\S{8,}$/),
         ],
       ],
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.getIsLoggedIn_) {
+      this.toasterService.success('Already signed in', 'Success');
+      this.router.navigate(['/']);
+    }
+  }
   sendResetCode() {
     if (this.forgetPasswordForm.valid) {
       this.isLoading.set(true);
@@ -68,50 +76,58 @@ export class ForgetPasswordComponent implements OnInit {
         },
         error: (err: IforgetPassword) => {
           this.isLoading.set(false);
-          this.toasterService.error(err.message, err.statusMsg);
+          if (!navigator.onLine) {
+            this.toasterService.error('No internet', err.statusMsg);
+          } else {
+            this.toasterService.error(err.message, err.statusMsg);
+          }
         },
       });
     }
-    console.log(this.forgetPasswordForm.value);
   }
   verifyCode() {
     if (this.verifyCodeForm.valid) {
-      this.isLoading.set(true);
+      this.isLoading_.set(true);
       this.authService.verifyResetPassword(this.verifyCodeForm.value).subscribe({
         next: (res: any) => {
-          this.isLoading.set(false);
+          this.isLoading_.set(false);
           this.counter.set(3);
           this.toasterService.success('Correct code', 'Success');
         },
         error: (err: IforgetPassword) => {
-          this.isLoading.set(false);
-          this.toasterService.error(err.message, err.statusMsg);
+          this.isLoading_.set(false);
+          if (!navigator.onLine) {
+            this.toasterService.error('No internet', err.statusMsg);
+          } else {
+            this.toasterService.error(err.message, err.statusMsg);
+          }
         },
       });
     }
-    console.log(this.verifyCodeForm.value);
   }
   resetPassword() {
     if (this.resetPasswordForm.valid) {
       this.resetPasswordForm.patchValue({
         email: this.forgetPasswordForm.get('email')?.value,
       });
-      this.isLoading.set(true);
+      this.isLoading__.set(true);
       this.authService.resetPassword(this.resetPasswordForm.value).subscribe({
         next: (res: any) => {
           this.counter.set(4);
-          this.isLoading.set(false);
+          this.isLoading__.set(false);
           this.toasterService.success('Password changed successfully', 'Success');
           this.router.navigate(['/login']);
         },
         error: (err: IforgetPassword) => {
-          this.isLoading.set(false);
-          this.toasterService.error(err.message, err.statusMsg);
+          this.isLoading__.set(false);
+          if (!navigator.onLine) {
+            this.toasterService.error('No internet', err.statusMsg);
+          } else {
+            this.toasterService.error(err.message, err.statusMsg);
+          }
         },
       });
     }
-
-    console.log(this.resetPasswordForm.value);
   }
 
   get emailController() {
@@ -137,7 +153,11 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   hasSpecialChar() {
-    return /[@$!%*?&]/.test(this.newPasswordController?.value);
+    return /[^A-Za-z\d\s]/.test(this.newPasswordController?.value);
+  }
+
+  hasSpaces() {
+    return /\s/.test(this.newPasswordController?.value);
   }
 
   checkCodeLength(form: AbstractControl) {
@@ -151,5 +171,22 @@ export class ForgetPasswordComponent implements OnInit {
   }
   togglePass() {
     this.showPass.update((p) => !p);
+  }
+
+  toStart() {
+    this.isLoading.set(false);
+    this.isLoading_.set(false);
+    this.isLoading__.set(false);
+    this.counter.set(1);
+    this.forgetPasswordForm.reset({
+      email: '',
+    });
+    this.verifyCodeForm.reset({
+      resetCode: '',
+    });
+    this.resetPasswordForm.reset({
+      email: '',
+      newPassword: '',
+    });
   }
 }
