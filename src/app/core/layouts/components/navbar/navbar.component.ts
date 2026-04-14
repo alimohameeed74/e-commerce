@@ -47,6 +47,7 @@ export class NavbarComponent implements OnInit {
   }
   signOut() {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('verified_token');
     localStorage.removeItem('userData');
     this.authService.userLogout();
   }

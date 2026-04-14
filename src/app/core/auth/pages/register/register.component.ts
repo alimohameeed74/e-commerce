@@ -99,6 +99,7 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.registerForm.value).subscribe({
         next: (res: IapiAuthResponse) => {
           localStorage.setItem('token', res.token);
+          sessionStorage.setItem('verified_token', res.token);
           localStorage.setItem('userData', JSON.stringify(res.user));
           this.authService.userLogin();
           this.authService.holdUserData(res.user);

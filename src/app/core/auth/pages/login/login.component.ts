@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe({
         next: (res: IapiAuthResponse) => {
           localStorage.setItem('token', res.token);
+          sessionStorage.setItem('verified_token', res.token);
           localStorage.setItem('userData', JSON.stringify(res.user));
           this.authService.userLogin();
           this.authService.holdUserData(res.user);

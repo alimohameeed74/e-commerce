@@ -36,15 +36,20 @@ export class App {
   ngOnInit(): void {
     initFlowbite();
     this.authService.init();
-    this.verifyToken();
+    const token = this.authService.getToken;
+    const verifiedToken = sessionStorage.getItem('verified_token');
+    if (token && token !== verifiedToken) {
+      this.verifyToken(token);
+    }
   }
 
-  verifyToken() {
+  verifyToken(token: string) {
     this.isLoading.set(true);
     this.spinnerService.setSpinnerText('Verifying session...');
     this.ngxSpinner.show();
     this.authService.verifyToken().subscribe({
       next: (res: IverifyTokenResponse) => {
+        sessionStorage.setItem('verified_token', token);
         this.isLoading.set(false);
         this.ngxSpinner.hide();
         this.spinnerService.resetSpinnerText();
@@ -53,6 +58,7 @@ export class App {
         this.ngxSpinner.hide();
         this.spinnerService.resetSpinnerText();
         if (err?.status === 401) {
+          sessionStorage.removeItem('verified_token');
           this.authService.userLogout();
           localStorage.clear();
           this.toasterService.warning('Please sign in first', 'Warning', {

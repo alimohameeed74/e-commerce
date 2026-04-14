@@ -16,18 +16,27 @@ import { IverifyTokenResponse } from '../models/verify-token-response/Iverify-to
 export class AuthService {
   private isLoggedIn: WritableSignal<boolean> = signal(false);
   private userData: WritableSignal<Iuser> = signal({ name: '', role: '', email: '' });
+  private token: WritableSignal<string | null> = signal(null);
   constructor(private httpClient: HttpClient) {}
   init() {
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('userData');
     if (token && userData) {
+      this.token.set(token);
       this.isLoggedIn.set(true);
       this.userData.set(JSON.parse(userData));
+    } else {
+      this.token.set(null);
+      this.isLoggedIn.set(false);
     }
   }
 
   get getIsLoggedIn_() {
     return this.isLoggedIn();
+  }
+
+  get getToken(): string | null {
+    return this.token();
   }
 
   holdUserData(data: Iuser) {
