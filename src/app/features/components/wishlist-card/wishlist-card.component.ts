@@ -54,7 +54,13 @@ export class WishlistCardComponent implements OnInit {
         });
       },
       error: (err) => {
-        this.toaster.error(err.message, err.status);
+        this.isLoading_.set(false);
+
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
@@ -68,7 +74,11 @@ export class WishlistCardComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading.set(false);
-        console.log(err);
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.status || 'fail');
+        } else {
+          this.toaster.error(err.message, err.status);
+        }
       },
     });
   }
