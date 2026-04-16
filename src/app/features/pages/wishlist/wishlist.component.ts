@@ -70,7 +70,7 @@ export class WishlistComponent implements OnInit {
 
         if (!navigator.onLine) {
           this.offline.set(true);
-        } else if (err?.status === 500 || err?.status === 401) {
+        } else if (err?.status === 401) {
           this.toaster.error('Please login again', err?.statusMsg);
         }
         this.wishlists.set([]);
