@@ -9,12 +9,20 @@ import { IcartApiResponse } from '../../models/cart-api-response/Icart-api-respo
 import { EmptyCartComponent } from '../../components/empty-cart/empty-cart.component';
 import { CurrencyPipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { InternetConnectionComponent } from '../../components/internet-connection/internet-connection.component';
+import { SpinnerService } from '../../../core/services/spinner/spinner.service.js';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
-  imports: [RouterLink, ProductCartComponent, EmptyCartComponent, CurrencyPipe],
+  imports: [
+    RouterLink,
+    ProductCartComponent,
+    EmptyCartComponent,
+    CurrencyPipe,
+    InternetConnectionComponent,
+  ],
 })
 export class CartComponent implements OnInit {
   carts: WritableSignal<UserCartProducts[]> = signal([]);
@@ -22,12 +30,17 @@ export class CartComponent implements OnInit {
   cartId: WritableSignal<string> = signal('');
   totalPrice: WritableSignal<number> = signal(0);
   totalItems: WritableSignal<number> = signal(0);
+  offline: WritableSignal<boolean> = signal(false);
+  emptyCart: WritableSignal<boolean> = signal(false);
+  isLoading: WritableSignal<boolean> = signal(false);
+  clearAllItemsLoader: WritableSignal<boolean> = signal(false);
   constructor(
     private cartsService: CartsService,
     private ngxSpinner: NgxSpinnerService,
     private authService: AuthService,
     private toaster: ToastrService,
     private router: Router,
+    private spinnerService: SpinnerService,
   ) {}
 
   ngOnInit() {
@@ -36,6 +49,8 @@ export class CartComponent implements OnInit {
         timeOut: 2000,
       });
       this.carts.set([]);
+      this.emptyCart.set(true);
+
       return;
     } else {
       this.getUserCarts();
@@ -48,42 +63,63 @@ export class CartComponent implements OnInit {
 
   getUserCarts() {
     this.ngxSpinner.show();
+    this.isLoading.set(true);
     this.cartsService.getLoggedUserCarts().subscribe({
       next: (res: IcartApiResponse) => {
+        this.isLoading.set(false);
         this.ngxSpinner.hide();
         this.carts.set(res.data.products);
         this.cartsCount.set(res.numOfCartItems);
         this.totalPrice.set(res.data.totalCartPrice);
         this.cartId.set(res.cartId);
-        res.data.products.forEach((product) => {
-          this.totalItems.update((p) => p + product.count);
-        });
+        if (res.numOfCartItems === 0) {
+          this.emptyCart.set(true);
+        } else {
+          res.data.products.forEach((product) => {
+            this.totalItems.update((p) => p + product.count);
+          });
+        }
       },
       error: (err) => {
+        this.isLoading.set(false);
         this.ngxSpinner.hide();
+        this.spinnerService.resetSpinnerText();
+        if (!navigator.onLine) {
+          this.offline.set(true);
+        } else if (err?.status === 401) {
+          this.toaster.error('Please login again', err?.statusMsg);
+        } else {
+          this.toaster.error('Please try again', err.statusMsg);
+        }
         this.carts.set([]);
-        console.log(err);
+        this.emptyCart.set(true);
       },
     });
   }
 
   clearUserCarts() {
-    this.ngxSpinner.show();
+    this.clearAllItemsLoader.set(true);
     this.cartsService.clearUserCarts().subscribe({
       next: (res: IcartApiResponse) => {
         this.ngxSpinner.hide();
+        this.clearAllItemsLoader.set(false);
         this.carts.set([]);
         this.cartsCount.set(0);
         this.totalPrice.set(0);
         this.totalItems.set(0);
       },
       error: (err) => {
-        this.ngxSpinner.hide();
+        this.clearAllItemsLoader.set(false);
+
         this.carts.set([]);
         this.cartsCount.set(0);
         this.totalPrice.set(0);
         this.totalItems.set(0);
-        console.log(err);
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.statusMsg || 'fail');
+        } else {
+          this.toaster.error(err.message, err.statusMsg);
+        }
       },
     });
   }

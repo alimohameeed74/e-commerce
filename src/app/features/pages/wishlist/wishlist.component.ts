@@ -72,6 +72,8 @@ export class WishlistComponent implements OnInit {
           this.offline.set(true);
         } else if (err?.status === 401) {
           this.toaster.error('Please login again', err?.statusMsg);
+        } else {
+          this.toaster.error('Please try again', err?.statusMsg);
         }
         this.wishlists.set([]);
         this.emptyCart.set(true);

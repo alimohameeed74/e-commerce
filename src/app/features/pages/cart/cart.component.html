@@ -1,25 +1,29 @@
-<div class="bg-gray-50 min-h-screen py-8">
-  <div class="container mx-auto px-4">
-    <div class="mb-8">
+<div class="bg-gray-50 py-8">
+  <div class="bg-white border-b border-gray-100 mb-4" [class.hidden]="offline() || isLoading()">
+    <div [class]="carts()!.length === 0 ? 'hidden' : ''" class="container mx-auto px-4 py-8">
       <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
-        <a class="hover:text-green-600 transition" routerLink="/">Home</a><span>/</span
+        <a class="hover:text-green-600 transition-colors" routerLink="/">Home</a><span>/</span
         ><span class="text-gray-900 font-medium">Shopping Cart</span>
       </nav>
       <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-3">
-            <span
-              class="bg-green-600 text-white w-12 h-12 rounded-xl flex items-center justify-center"
-              ><i class="fa-solid fa-cart-shopping"></i></span
-            >Shopping Cart
-          </h1>
-          <p class="text-gray-500 mt-2">
-            You have <span class="font-semibold text-green-600">{{ cartsCount() }} item</span> in
-            your cart
-          </p>
+        <div class="flex items-center gap-4">
+          <div
+            class="bg-green-600 text-white w-12 h-12 rounded-xl flex items-center justify-center"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">My Shopping Cart</h1>
+            <p class="text-gray-500 mt-2">
+              You have
+              <span class="font-semibold text-green-600">{{ cartsCount() }} item</span> in your cart
+            </p>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="container mx-auto px-4 py-8" [class.hidden]="offline() || isLoading()">
     <div [class]="carts().length !== 0 ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : ''" class="">
       <div class="lg:col-span-2">
         <div class="space-y-4">
@@ -39,10 +43,18 @@
               routerLink="/products"
               ><span><i class="fa-solid fa-arrow-left"></i></span> Continue Shopping</a
             ><button
+              [disabled]="clearAllItemsLoader()"
               (click)="clearUserCarts()"
-              class="group flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors"
+              class="group flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
             >
-              <i class="fa-solid fa-trash text-xs group-hover:scale-110 transition-transform"></i
+              <i
+                [class]="
+                  clearAllItemsLoader()
+                    ? 'fa-solid fa-spin fa-spinner'
+                    : 'fa-solid fa-trash group-hover:scale-110 transition-transform'
+                "
+                class="text-xs"
+              ></i
               ><span>Clear all items</span>
             </button>
           </div>
@@ -84,4 +96,5 @@
       }
     </div>
   </div>
+  <app-internet-connection [class.hidden]="!offline()"></app-internet-connection>
 </div>

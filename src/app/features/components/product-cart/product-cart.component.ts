@@ -3,15 +3,18 @@ import {
   Component,
   input,
   InputSignal,
+  OnChanges,
   OnInit,
   output,
   signal,
+  SimpleChanges,
   WritableSignal,
 } from '@angular/core';
 import { UserCartProducts } from '../../models/user-cart-products/user-cart-products.js';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { IcartApiResponse } from '../../models/cart-api-response/Icart-api-response.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-cart',
@@ -19,15 +22,23 @@ import { IcartApiResponse } from '../../models/cart-api-response/Icart-api-respo
   styleUrls: ['./product-cart.component.css'],
   imports: [RouterLink, CurrencyPipe],
 })
-export class ProductCartComponent implements OnInit {
+export class ProductCartComponent implements OnInit, OnChanges {
   product: InputSignal<UserCartProducts> = input.required();
   isLoading: WritableSignal<boolean> = signal(false);
   isLoading_: WritableSignal<boolean> = signal(false);
   isDeletedFromCart = output<IcartApiResponse>();
   increaseOrDecrease: WritableSignal<boolean> = signal(false);
-  constructor(private cartsService: CartsService) {}
+  hideResetProductCount: WritableSignal<boolean> = signal(false);
+  productCount: WritableSignal<number> = signal(0);
+  constructor(
+    private cartsService: CartsService,
+    private toaster: ToastrService,
+  ) {}
 
   ngOnInit() {}
+  ngOnChanges(): void {
+    this.productCount.set(this.product().count);
+  }
 
   removeProductFromCart(id: string) {
     this.isLoading.set(true);
@@ -38,22 +49,33 @@ export class ProductCartComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading.set(false);
-        console.log(err);
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.statusMsg || 'fail');
+        } else {
+          this.toaster.error(err.message, err.statusMsg);
+        }
       },
     });
   }
   updatedProductFromCart(id: string, count: number) {
     this.isLoading_.set(true);
+    this.hideResetProductCount.set(true);
     this.cartsService.updateCartProductQuantity(id, count).subscribe({
       next: (res: IcartApiResponse) => {
         this.isLoading_.set(false);
         this.increaseOrDecrease.set(false);
+        this.hideResetProductCount.set(false);
         this.isDeletedFromCart.emit(res);
       },
       error: (err) => {
         this.isLoading_.set(false);
         this.increaseOrDecrease.set(false);
-        console.log(err);
+        this.hideResetProductCount.set(false);
+        if (!navigator.onLine) {
+          this.toaster.error('check your connection', err.statusMsg || 'fail');
+        } else {
+          this.toaster.error(err.message, err.statusMsg);
+        }
       },
     });
   }
@@ -67,5 +89,10 @@ export class ProductCartComponent implements OnInit {
   increase() {
     this.increaseOrDecrease.set(true);
     this.product().count++;
+  }
+
+  resetProductCount() {
+    this.increaseOrDecrease.set(false);
+    this.product().count = this.productCount();
   }
 }

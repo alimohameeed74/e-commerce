@@ -47,14 +47,22 @@
             <i class="fa-solid fa-plus text-xs"></i>
           </button>
           <button
+            [disabled]="isLoading_()"
             [class]="increaseOrDecrease() ? '' : 'hidden'"
             (click)="updatedProductFromCart(product().product._id, product().count)"
-            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all disabled:opacity-50"
           >
             <i
               [class]="isLoading_() ? 'fa-spin fa-spinner' : 'fa-check'"
               class="fa-solid text-xs"
             ></i>
+          </button>
+          <button
+            [class]="increaseOrDecrease() && !hideResetProductCount() ? '' : 'hidden'"
+            (click)="resetProductCount()"
+            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+          >
+            <i class="fa-solid text-xs fa-xmark"></i>
           </button>
         </div>
 
