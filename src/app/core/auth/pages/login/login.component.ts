@@ -91,11 +91,11 @@ export class LoginComponent implements OnInit {
           if (err?.status === 401) {
             this.toasterService.error(err?.statusMsg, err?.message);
           } else if (!navigator.onLine) {
-            this.toasterService.error('fail', 'No internet', {
+            this.toasterService.error('No internet', 'fail', {
               timeOut: 3000,
             });
           } else {
-            this.toasterService.error(err?.statusMsg, err?.message);
+            this.toasterService.error(err?.message, err?.statusMsg);
           }
         },
       });

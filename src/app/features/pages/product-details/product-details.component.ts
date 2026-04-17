@@ -159,9 +159,9 @@ export class ProductDetailsComponent implements OnInit {
         this.isloading.set(false);
 
         if (!navigator.onLine) {
-          this.toaster.error('check your connection', err.status || 'fail');
+          this.toaster.error('check your connection', err.statusMsg || 'fail');
         } else {
-          this.toaster.error(err.message, err.status);
+          this.toaster.error(err.message, err.statusMsg);
         }
       },
     });
