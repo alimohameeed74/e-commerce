@@ -6,7 +6,9 @@ export const globalInterceptor: HttpInterceptorFn = (req, next) => {
     req.url.includes('cart') ||
     req.url.includes('wishlist') ||
     req.url.includes('orders') ||
-    req.url.includes('verifyToken')
+    req.url.includes('verifyToken') ||
+    req.url.includes('changeMyPassword') ||
+    req.url.includes('updateMe')
   ) {
     req = req.clone({
       setHeaders: {

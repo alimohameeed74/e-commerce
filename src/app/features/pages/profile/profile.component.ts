@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  imports: [RouterOutlet],
 })
 export class ProfileComponent implements OnInit {
   constructor() {}

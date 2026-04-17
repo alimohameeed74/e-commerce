@@ -86,22 +86,6 @@
           />
         </a>
 
-        <form class="hidden lg:flex flex-1 max-w-2xl">
-          <div class="relative w-full">
-            <input
-              type="text"
-              placeholder="Search for products, brands and more..."
-              class="w-full px-5 py-3 pr-12 rounded-full border border-gray-200 bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all text-sm"
-            />
-            <button
-              type="button"
-              class="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center hover:bg-primary-700 transition-colors"
-            >
-              <i class="fa-solid fa-magnifying-glass text-sm"></i>
-            </button>
-          </div>
-        </form>
-
         <nav class="hidden xl:flex items-center gap-6">
           <a class="text-gray-700 hover:text-green-600 font-medium transition-colors" routerLink="/"
             >Home</a
@@ -251,14 +235,6 @@
                     class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
                     routerLink="/wishlist"
                     ><i class="fa-regular fa-heart w-4 text-gray-400"></i>My Wishlist</a
-                  ><a
-                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
-                    routerLink="/profile/addresses"
-                    ><i class="fa-regular fa-address-book w-4 text-gray-400"></i>Addresses</a
-                  ><a
-                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
-                    routerLink="/profile/settings"
-                    ><i class="fa-solid fa-gear w-4 text-gray-400"></i>Settings</a
                   >
                 </div>
                 <div class="border-t border-gray-100 py-2">
@@ -320,21 +296,7 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
-  <form class="p-4 border-b border-gray-100">
-    <div class="relative">
-      <input
-        type="text"
-        placeholder="Search products..."
-        class="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm"
-        value=""
-      /><button
-        type="button"
-        class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-green-600 text-white flex items-center justify-center"
-      >
-        <i class="fa-solid fa-magnifying-glass text-white"></i>
-      </button>
-    </div>
-  </form>
+
   <nav class="p-4">
     <div class="space-y-1">
       <a

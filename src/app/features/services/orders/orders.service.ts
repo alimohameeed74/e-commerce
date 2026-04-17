@@ -19,7 +19,7 @@ export class OrdersService {
     shippingAddress: IshippingAddress,
   ): Observable<IonlineOrderResponse> {
     return this.httpClient.post<IonlineOrderResponse>(
-      `${environment.apiURL}/orders/checkout-session/${cartId}?url=${environment.baseURL}`,
+      `${environment.apiURL}/orders/checkout-session/${cartId}?url=${environment.productionUrl}`,
       shippingAddress,
     );
   }

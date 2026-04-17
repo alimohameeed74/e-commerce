@@ -51,13 +51,22 @@ export class CheckoutComponent implements OnInit {
           next: (res: any) => {
             this.isLoading.set(false);
             this.toaster.success(res?.message, res?.status);
-            this.router.navigate(['/allorders']);
+            this.router.navigate(['/home']);
           },
           error: (err: any) => {
             this.isLoading.set(false);
-            this.toaster.error(err?.error?.message, err?.error?.statusMsg);
-            this.router.navigate(['/products']);
-            console.log(err);
+            this.ifCash.set(true);
+            this.ifOnline.set(true);
+            if (!navigator.onLine) {
+              this.toaster.error('No internet', 'fail');
+            } else if (err?.status === 401) {
+              this.toaster.error(err?.message, err?.statusMsg, {
+                timeOut: 2000,
+              });
+              this.router.navigate(['/login']);
+            } else {
+              this.toaster.error(err?.message, err?.statusMsg);
+            }
           },
         });
       }
@@ -72,7 +81,18 @@ export class CheckoutComponent implements OnInit {
           },
           error: (err: any) => {
             this.isLoading.set(false);
-            console.log(err);
+            this.ifCash.set(true);
+            this.ifOnline.set(true);
+            if (!navigator.onLine) {
+              this.toaster.error('No internet', 'fail');
+            } else if (err?.status === 401) {
+              this.toaster.error(err?.message, err?.statusMsg, {
+                timeOut: 2000,
+              });
+              this.router.navigate(['/login']);
+            } else {
+              this.toaster.error(err?.message, err?.statusMsg);
+            }
           },
         });
       }

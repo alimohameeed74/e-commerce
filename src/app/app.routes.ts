@@ -8,6 +8,11 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'allorders',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
     path: 'home',
     loadComponent: () =>
       import('./features/pages/home/home.component').then((p) => p.HomeComponent),
@@ -22,27 +27,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/pages/profile/profile.component').then((p) => p.ProfileComponent),
-    children: [
-      {
-        path: 'addresses',
-        loadComponent: () =>
-          import('./features/pages/addresses/addresses.component').then(
-            (p) => p.AddressesComponent,
-          ),
-      },
-      {
-        path: 'settings',
-        loadComponent: () =>
-          import('./features/pages/settings/settings.component').then((p) => p.SettingsComponent),
-      },
-    ],
   },
-  {
-    path: 'allorders',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/pages/orders/orders.component').then((p) => p.OrdersComponent),
-  },
+
   {
     path: 'products',
     loadComponent: () =>
@@ -100,23 +86,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/pages/cart/cart.component').then((p) => p.CartComponent),
   },
-  {
-    path: 'returns',
-    loadComponent: () =>
-      import('./features/pages/returns/returns.component').then((p) => p.ReturnsComponent),
-  },
-  {
-    path: 'help',
-    loadComponent: () =>
-      import('./features/pages/help/help.component').then((p) => p.HelpComponent),
-  },
-  {
-    path: 'track-order',
-    loadComponent: () =>
-      import('./features/pages/track-order/track-order.component').then(
-        (p) => p.TrackOrderComponent,
-      ),
-  },
+
   {
     path: 'login',
     loadComponent: () =>
@@ -143,11 +113,7 @@ export const routes: Routes = [
     path: 'terms',
     loadComponent: () => import('./core/pages/terms/terms.component').then((p) => p.TermsComponent),
   },
-  {
-    path: 'cookies',
-    loadComponent: () =>
-      import('./core/pages/cookies/cookies.component').then((p) => p.CookiesComponent),
-  },
+
   {
     path: '**',
     redirectTo: '404',
