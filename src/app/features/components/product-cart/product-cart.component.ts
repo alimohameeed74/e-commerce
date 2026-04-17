@@ -71,6 +71,8 @@ export class ProductCartComponent implements OnInit, OnChanges {
         this.isLoading_.set(false);
         this.increaseOrDecrease.set(false);
         this.hideResetProductCount.set(false);
+
+        this.product().count = this.productCount();
         if (!navigator.onLine) {
           this.toaster.error('check your connection', err.statusMsg || 'fail');
         } else {

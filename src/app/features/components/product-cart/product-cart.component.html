@@ -31,39 +31,45 @@
           product().price | currency: 'EGP'
         }}</span>
       </div>
-      <div class="mt-auto flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200">
-          <button
-            (click)="decrease()"
-            [disabled]="product().count <= 1"
-            class="h-8 w-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-800 disabled:opacity-40 transition-all"
-          >
-            <i class="fa-solid fa-minus text-xs"></i></button
-          ><span class="w-12 text-center font-bold text-gray-900">{{ product().count }}</span
-          ><button
-            (click)="increase()"
-            class="h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
-          >
-            <i class="fa-solid fa-plus text-xs"></i>
-          </button>
-          <button
-            [disabled]="isLoading_()"
-            [class]="increaseOrDecrease() ? '' : 'hidden'"
-            (click)="updatedProductFromCart(product().product._id, product().count)"
-            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all disabled:opacity-50"
-          >
-            <i
-              [class]="isLoading_() ? 'fa-spin fa-spinner' : 'fa-check'"
-              class="fa-solid text-xs"
-            ></i>
-          </button>
-          <button
-            [class]="increaseOrDecrease() && !hideResetProductCount() ? '' : 'hidden'"
-            (click)="resetProductCount()"
-            class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
-          >
-            <i class="fa-solid text-xs fa-xmark"></i>
-          </button>
+      <div class="mt-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div
+          class="flex flex-col sm:flex-row items-center bg-gray-50 rounded-xl p-1 border border-gray-200"
+        >
+          <div class="flex items-center">
+            <button
+              (click)="decrease()"
+              [disabled]="product().count <= 1"
+              class="h-8 w-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-800 disabled:opacity-40 transition-all"
+            >
+              <i class="fa-solid fa-minus text-xs"></i></button
+            ><span class="w-12 text-center font-bold text-gray-900">{{ product().count }}</span
+            ><button
+              (click)="increase()"
+              class="h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+            >
+              <i class="fa-solid fa-plus text-xs"></i>
+            </button>
+          </div>
+          <div class="flex items-center">
+            <button
+              [disabled]="isLoading_()"
+              [class]="increaseOrDecrease() ? '' : 'hidden'"
+              (click)="updatedProductFromCart(product().product._id, product().count)"
+              class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all disabled:opacity-50"
+            >
+              <i
+                [class]="isLoading_() ? 'fa-spin fa-spinner' : 'fa-check'"
+                class="fa-solid text-xs"
+              ></i>
+            </button>
+            <button
+              [class]="increaseOrDecrease() && !hideResetProductCount() ? '' : 'hidden'"
+              (click)="resetProductCount()"
+              class="ms-2 h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all"
+            >
+              <i class="fa-solid text-xs fa-xmark"></i>
+            </button>
+          </div>
         </div>
 
         <div class="flex items-center gap-4">
