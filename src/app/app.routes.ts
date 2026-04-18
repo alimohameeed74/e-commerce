@@ -22,12 +22,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/pages/shipping/shipping.component').then((p) => p.ShippingComponent),
   },
-  {
-    path: 'profile',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/pages/profile/profile.component').then((p) => p.ProfileComponent),
-  },
 
   {
     path: 'products',

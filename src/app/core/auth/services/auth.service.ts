@@ -78,7 +78,4 @@ export class AuthService {
   verifyToken(): Observable<IverifyTokenResponse> {
     return this.httpClient.get<IverifyTokenResponse>(`${environment.apiURL}/auth/verifyToken`);
   }
-
-  updateUserData() {}
-  updateUserPassword() {}
 }

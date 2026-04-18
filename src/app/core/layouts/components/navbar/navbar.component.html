@@ -197,7 +197,8 @@
                 title="Account"
               >
                 <i
-                  class="fa-solid fa-circle-user text-xl text-gray-500 group-hover:text-primary-600 transition-colors"
+                  [class]="showUserInfoList() ? 'fa-xmark-circle' : 'fa-user-circle'"
+                  class="fa-solid text-xl text-gray-500 group-hover:text-primary-600 transition-colors"
                 ></i>
               </button>
 
@@ -222,16 +223,12 @@
                 </div>
                 <div class="py-2">
                   <a
+                    (click)="closeUserInfo()"
                     class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
-                    routerLink="/profile"
-                  >
-                    <i class="fa-regular fa-user w-4 text-gray-400"></i>
-                    My Profile</a
+                    routerLink="/cart"
+                    ><i class="fa-solid fa-shopping-cart w-4 text-gray-400"></i>My Cart</a
                   ><a
-                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
-                    routerLink="/allorders"
-                    ><i class="fa-solid fa-box-open w-4 text-gray-400"></i>My Orders</a
-                  ><a
+                    (click)="closeUserInfo()"
                     class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600 hover:bg-primary-50 transition-colors"
                     routerLink="/wishlist"
                     ><i class="fa-regular fa-heart w-4 text-gray-400"></i>My Wishlist</a

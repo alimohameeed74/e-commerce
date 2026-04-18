@@ -366,7 +366,7 @@
           >
           </i>
 
-          <span>Create My Account</span>
+          <span>Create {{ isLoading() ? 'ing' : 'My' }} Account</span>
         </button>
         <div
           [class]="registerForm.valid ? 'hidden' : 'flex'"

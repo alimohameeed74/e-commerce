@@ -66,6 +66,12 @@ export class WishlistCardComponent implements OnInit {
   }
 
   removeProductFromWishlist(id: string) {
+    if (!this.isUserLogged) {
+      this.toaster.warning('Please sign in first', 'Warning', {
+        timeOut: 2000,
+      });
+      return;
+    }
     this.isLoading.set(true);
     this.wishlistsService.removeProductFromWishlist(id).subscribe({
       next: (res: IdeleteWishlistResponse) => {
