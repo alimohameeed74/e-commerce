@@ -1,5 +1,8 @@
 <div class="bg-gray-50/50 py-8">
-  <div class="bg-white border-b border-gray-100" [class.hidden]="offline() || isLoading()">
+  <div
+    class="bg-white border-b border-gray-100"
+    [class.hidden]="offline() || isLoading() || !isUserLogged"
+  >
     <div [class]="wishlists()?.length === 0 ? 'hidden' : ''" class="container mx-auto px-4 py-8">
       <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
         <a class="hover:text-green-600 transition-colors" routerLink="/">Home</a><span>/</span
@@ -19,7 +22,10 @@
     </div>
   </div>
   <div class="container mx-auto px-4 py-8" [class.hidden]="offline() || isLoading()">
-    <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <div
+      [class]="!isUserLogged ? 'hidden' : ''"
+      class="bg-white rounded-2xl border border-gray-100 overflow-hidden"
+    >
       @if (wishlists()?.length !== 0) {
         <div
           class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-sm font-medium text-gray-500"
@@ -38,14 +44,14 @@
           ></app-wishlist-card>
         }
       </div>
-      <app-empty-cart
-        [class.hidden]="!emptyCart()"
-        icon="fa-heart"
-        title="wishlist"
-      ></app-empty-cart>
     </div>
+    <app-empty-cart
+      [class.hidden]="!emptyCart() && isUserLogged"
+      icon="fa-heart"
+      title="wishlist"
+    ></app-empty-cart>
     <div
-      [class]="wishlists()?.length === 0 ? 'hidden' : ''"
+      [class]="wishlists()?.length === 0 || !isUserLogged ? 'hidden' : ''"
       class="mt-8 flex items-center justify-between"
     >
       <a

@@ -104,6 +104,7 @@ export class CartComponent implements OnInit {
         this.ngxSpinner.hide();
         this.clearAllItemsLoader.set(false);
         this.carts.set([]);
+        this.emptyCart.set(true);
         this.cartsCount.set(0);
         this.totalPrice.set(0);
         this.totalItems.set(0);
@@ -112,6 +113,7 @@ export class CartComponent implements OnInit {
         this.clearAllItemsLoader.set(false);
 
         this.carts.set([]);
+        this.emptyCart.set(true);
         this.cartsCount.set(0);
         this.totalPrice.set(0);
         this.totalItems.set(0);
@@ -125,9 +127,14 @@ export class CartComponent implements OnInit {
   }
 
   handleChange(event: IcartApiResponse) {
+    this.cartsCount.set(event.numOfCartItems);
+    if (this.cartsCount() === 0) {
+      this.carts.set([]);
+      this.emptyCart.set(true);
+      return;
+    }
     this.totalItems.set(0);
     this.carts.set(event.data.products);
-    this.cartsCount.set(event.numOfCartItems);
     this.totalPrice.set(event.data.totalCartPrice);
     event.data.products.forEach((product) => {
       this.totalItems.update((p) => p + product.count);
