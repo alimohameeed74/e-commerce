@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           this.isLoading.set(false);
           if (err?.status === 401) {
-            this.toasterService.error(err?.statusMsg, err?.message);
+            this.toasterService.error(err?.message, err?.statusMsg);
           } else if (!navigator.onLine) {
             this.toasterService.error('No internet', 'fail', {
               timeOut: 3000,
