@@ -268,7 +268,7 @@
             </div>
           }
         }
-        @if (rePasswordController?.touched) {
+        @if (rePasswordController?.touched && rePasswordController?.value.length !== 0) {
           <p
             [class.text-success]="rePasswordController?.value === passwordController?.value"
             [class.text-danger]="rePasswordController?.value !== passwordController?.value"
