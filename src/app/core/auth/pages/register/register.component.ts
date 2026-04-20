@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit {
           this.isLoading.set(false);
 
           if (err?.status === 409) {
-            this.toasterService.error(err?.statusMsg, err?.message);
+            this.toasterService.error(err?.message, err?.statusMsg);
             this.router.navigate(['/login']);
           } else if (!navigator.onLine) {
             this.toasterService.error('No internet', 'fail', {
